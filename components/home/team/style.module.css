@@ -1,0 +1,58 @@
+.root {
+  z-index: 0;
+}
+.card {
+  width: 180px;
+  height: 250px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 2px #aaa;
+  background: #fafafa;
+  margin: 0 1rem 1rem 1em;
+  align-items: center;
+  border-radius: 3px;
+  user-select: none;
+  animation: fly-in-from-left 0.5s 1s ease both;
+  margin: 0 auto;
+}
+.title {
+  font-family: LatoBl;
+  font-size: 24px;
+  text-transform: uppercase;
+  text-align: left;
+  color: #1b3032;
+  position: relative;
+  z-index: 2;
+}
+.title:after {
+  content: url("/images/dots.png");
+  top: -10px;
+  left: 0px;
+  z-index: -1;
+  position: absolute;
+}
+.name {
+  color: #212121;
+  font-size: medium;
+  font-weight: bold;
+  text-align: center;
+}
+.position {
+  color: #212121;
+  font-weight: 400;
+  font-size: 1.6rem;
+}
+.cards {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(228px, 1fr));
+  gap: 10px;
+  justify-items: center;
+}
+.avatar-wrapper {
+  display: flex;
+  justify-content: center;
+}
+.workplace {
+  font-style: italic;
+  font-size: 1.6rem;
+}

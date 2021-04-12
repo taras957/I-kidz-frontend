@@ -1,0 +1,81 @@
+.root {
+  padding: 10rem 0;
+}
+.section-title {
+  font-family: LatoBl;
+  font-size: 24px;
+  text-transform: uppercase;
+  text-align: left;
+  color: #1b3032;
+  position: relative;
+  z-index: 2;
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(228px, 1fr));
+  list-style: none;
+  position: relative;
+  gap: 25px;
+}
+/* .cards:before {
+  content: "";
+  width: calc(50% - 210px);
+  border-top: 2px dotted #37d6e5;
+  position: absolute;
+  z-index: -2;
+  top: 35px;
+  left: 50%;
+} */
+/* .cards:after {
+  content: "";
+  width: calc(50% - 210px);
+  border-top: 2px dotted #fa569b;
+  position: absolute;
+  z-index: -2;
+  top: 35px;
+  right: 50%;
+} */
+.card {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  padding: 8px;
+}
+.section-title:after {
+  content: url(/images/dots.png);
+  top: -10px;
+  left: 0px;
+  z-index: -1;
+  position: absolute;
+}
+.icon-wrapper {
+  width: 85px;
+  margin: 0 auto;
+  background: #fff;
+}
+.icon {
+  width: 78px;
+  height: 78px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: 0 auto;
+}
+.title {
+  font-family: "Nunito";
+  text-align: center;
+  font-size: 16px;
+  text-transform: uppercase;
+  margin-top: 20px;
+  margin-bottom: 13px;
+}
+.subtitle {
+  font-family: "Nunito";
+  text-align: center;
+  font-size: 14px;
+  line-height: 2;
+}
+@media (max-width: 1024px) {
+  .cards::before,
+  .cards::after {
+    content: none;
+  }
+}

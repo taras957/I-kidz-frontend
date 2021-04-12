@@ -1,0 +1,11 @@
+.background {
+  background: linear-gradient(to bottom, #5d8aa8 0%, #4e7b99 100%);
+  background-image: url("/images/bgx.svg");
+  width: 100%;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: 1;
+  position: relative;
+  overflow: hidden;
+}

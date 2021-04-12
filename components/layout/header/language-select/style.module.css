@@ -1,0 +1,21 @@
+.language-select {
+  background: transparent;
+}
+.language-label {
+  padding-left: 5px;
+  display: inline-block;
+  cursor: pointer;
+}
+.option-inner {
+  display: flex;
+  align-items: center;
+}
+.selectedLabel {
+  color: white;
+  margin: 0;
+  padding-left: 5px;
+}
+.selectedItem {
+  display: flex;
+  align-items: center;
+}

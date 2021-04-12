@@ -1,0 +1,13 @@
+.burger-btn {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  margin-left: auto;
+  display: block;
+}
+
+.burger-nav {
+  position: fixed;
+  right: 10px;
+  top: 10px;
+}

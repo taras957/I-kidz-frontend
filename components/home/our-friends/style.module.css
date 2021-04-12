@@ -1,0 +1,54 @@
+.root {
+  z-index: 0;
+  padding: 15rem 0;
+}
+.cards {
+  display: grid;
+  grid-template-columns: auto;
+}
+.card {
+  /* width: 180px;
+  height: 250px; */
+  padding: 1.5rem;
+  background: #fafafa;
+  margin: 0 1rem 1rem 1em;
+  align-items: center;
+  border-radius: 3px;
+  user-select: none;
+  margin: 0 auto;
+}
+.title {
+  font-family: LatoBl;
+  font-size: 24px;
+  text-transform: uppercase;
+  text-align: left;
+  color: #1b3032;
+  position: relative;
+  z-index: 2;
+}
+.title:after {
+  content: url("/images/dots.png");
+  top: -10px;
+  left: 0px;
+  z-index: -1;
+  position: absolute;
+}
+.name {
+  color: #212121;
+  font-size: medium;
+  font-weight: bold;
+  text-align: center;
+  font-family: "Nunito", Sans-serif;
+}
+
+.avatar-wrapper {
+  display: flex;
+  justify-content: center;
+}
+.avatar {
+  object-fit: scale-down;
+}
+/* .logo-link {
+  display: block;
+  height: 100%;
+} */

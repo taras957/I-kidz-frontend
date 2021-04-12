@@ -1,0 +1,29 @@
+.form-control {
+  margin-bottom: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.form-control label {
+  color: #777;
+  display: block;
+  font-size: 1.6rem;
+}
+
+.form-control textarea {
+  border: 2px solid #f0f0f0;
+  border-radius: 4px;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  height: 200px;
+  resize: none;
+}
+
+.form-control textarea:focus {
+  outline: 0;
+  border-color: #777;
+}

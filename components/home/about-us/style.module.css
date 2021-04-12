@@ -1,0 +1,55 @@
+.root {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10rem;
+}
+.side-content {
+  width: 62%;
+}
+.side-pic {
+  margin-left: -3%;
+}
+.title {
+  font-family: LatoBl;
+  font-size: 24px;
+  text-transform: uppercase;
+  text-align: right;
+  color: #1b3032;
+
+  position: relative;
+  z-index: 2;
+}
+.title:after {
+  content: url("/images/dots.png");
+  top: -10px;
+  right: -80px;
+  left: unset;
+  z-index: -1;
+  position: absolute;
+}
+
+.subtitle,
+.motto,
+.pros-item {
+  font-family: "Nunito", Sans-serif;
+  font-size: 1.6rem;
+  line-height: 1.8;
+  letter-spacing: normal;
+  color: #1b3032;
+}
+.motto {
+  margin-top: 3rem;
+  font-weight: 700;
+  font-size: "Nunito", Sans-serif;
+}
+@media (max-width: 1024px) {
+  .side-content {
+    width: 100%;
+  }
+}
+@media (max-width: 767px) and (orientation: portrait) {
+  .side-pic {
+    display: none;
+  }
+}

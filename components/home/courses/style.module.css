@@ -1,0 +1,23 @@
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(353px, 1fr));
+  gap: 15px;
+  list-style: none;
+  position: relative;
+}
+.section-title {
+  font-family: LatoBl;
+  font-size: 24px;
+  text-transform: uppercase;
+  text-align: left;
+  color: #1b3032;
+  position: relative;
+  z-index: 2;
+}
+.section-title:after {
+  content: url(/images/dots.png);
+  top: -10px;
+  left: 0px;
+  z-index: -1;
+  position: absolute;
+}

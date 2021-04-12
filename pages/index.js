@@ -1,65 +1,57 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import css from "./style.module.css";
+import Head from "next/head";
+
+import Header from "components/layout/header";
+import Container from "components/layout/container";
+import WaveBackground from "components/layout/wave-background";
+import Hero from "components/home/hero";
+import AboutUs from "components/home/about-us";
+import Testimonials from "components/home/testimonials";
+import Team from "components/home/team";
+import Development from "components/home/development";
+import Courses from "components/home/courses";
+import Friends from "components/home/our-friends";
+import Gallery from "components/home/gallery";
+import Map from "components/home/map";
+import Footer from "components/layout/footer";
 
 export default function Home() {
   return (
-    <div className={styles.container}>
+    <>
       <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700;800&display=swap"
+          rel="stylesheet"
+        ></link>
+        <script
+          type="text/javascript"
+          src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyACkxqpBmKSrBtab20EBdxZNDDxZRuoOSc"
+        ></script>
       </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+      <div className={css["root"]}>
+        <Header />
+        <WaveBackground>
+          <Container>
+            <Hero />
+          </Container>
+        </WaveBackground>
+        <Container>
+          <AboutUs />
+          <Testimonials />
+          <Team />
+          <Development />
+        </Container>
+        <img className={css["wave"]} src="images/s4i6.png" alt="waves" />
+        <Container>
+          <Courses />
+          <Friends />
+          <Gallery />
+        </Container>
+        <Map />
+        <Footer>{(children) => <Container>{children}</Container>}</Footer>
+      </div>
+    </>
+  );
 }

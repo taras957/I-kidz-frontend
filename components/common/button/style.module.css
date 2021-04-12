@@ -1,0 +1,32 @@
+.btn {
+  border-radius: 30px;
+  padding: 15px 25px;
+  /* display: block; */
+  font-size: 1.6rem;
+  font-family: LatoM;
+  color: #fff;
+  text-align: center;
+  text-transform: uppercase;
+  line-height: 28px;
+  border: none;
+  transition: all 0.2s;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 5rem;
+}
+.btn:hover {
+  cursor: pointer;
+}
+.btn_r {
+  background: linear-gradient(
+    102deg,
+    rgb(240, 118, 104) 0%,
+    rgb(255, 140, 127) 100%
+  );
+}
+.btn_r:hover {
+  box-shadow: 0px 7px 16px 0px rgb(255 0 0 / 21%);
+  transform: scale(1.02);
+}
