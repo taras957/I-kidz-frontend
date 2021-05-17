@@ -1,74 +1,17 @@
-.form-control {
-  margin-bottom: 10px;
-  position: relative;
-  display: flex;
+.form-custom-cls {
   flex-direction: column;
-  justify-content: center;
 }
-
-.form-control label {
-  color: #777;
-  display: block;
-  font-size: 1.6rem;
+.form-fieldset {
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
-
-.form-control textarea,
-.form-control input {
-  border: 2px solid #f0f0f0;
-  border-radius: 4px;
-  display: block;
-  width: 100%;
-  padding: 10px;
-  font-size: 14px;
-  height: 200px;
-  resize: none;
-}
-.form-control input {
-  height: 50px;
-  width: 50%;
-}
-.form-control textarea:focus,
-.form-control input:focus {
-  outline: 0;
-  border-color: #777;
-}
-.form-grid {
-  max-width: 90%;
-  margin: 0 auto;
+.contacts-field-set {
   display: grid;
-  gap: 20px;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 5px;
 }
-.btn {
-  box-sizing: border-box;
-  appearance: none;
-  background-color: transparent;
-  border: 2px solid var(--btn-bg);
-  border-radius: 0.6em;
-  color: var(--btn-bg);
-  cursor: pointer;
-  display: flex;
-  align-self: center;
-  font-size: 1.6rem;
-  font-weight: 400;
-  line-height: 1;
-  padding: 1em 2em;
-  text-decoration: none;
-  text-align: center;
-  text-transform: uppercase;
-  font-family: "Montserrat", sans-serif;
-  font-weight: 700;
-}
-
-.btn:hover,
-.btn:focus {
-  color: #fff;
-  outline: 0;
-}
-
-.first {
-  transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
-}
-.btn:hover {
-  box-shadow: 0 0 40px 40px var(--btn-bg) inset;
+.legend {
+  font-size: 1.8rem;
+  font-weight: 500;
 }

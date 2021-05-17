@@ -6,11 +6,11 @@ const Input = (props) => {
   const { formProps, title, isLoading, errors } = props;
   return (
     <div className={css["form-control"]}>
-      <label htmlFor="hero_btn">
+      <label htmlFor={title}>
         {title}
         <Spinner isLoading={isLoading} />
       </label>
-      <input id={"hero_btn"} {...formProps} />
+      <input id={title} {...formProps} />
       <p className={"error"}>{errors}</p>
     </div>
   );

@@ -3,11 +3,11 @@ import axios from "axios";
 
 async function client(
   endpoint,
-  {data, token, headers: customHeaders, ...customConfig} = {},
+  {data, token, headers: customHeaders, isBlob=false,...customConfig} = {},
 ) {
   const config = {
     method: data ? 'POST' : 'GET',
-    data: data ? JSON.stringify(data) : undefined,
+    data: data ? (isBlob ?data : JSON.stringify(data)) : undefined,
     url:`${apiURL}/${endpoint}`,
     headers: {
     //   Authorization: token ? `Bearer ${token}` : undefined,

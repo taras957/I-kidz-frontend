@@ -12,6 +12,7 @@ import FormButton from "components/admin-page/common/form/form-btn";
 
 import { client } from "utils/api-client";
 import { siteInfo } from "queries";
+import css from "./style.module.css";
 
 const schema = yup.object().shape({
   hero: yup.object().shape({
@@ -54,57 +55,69 @@ const GeneralInfoForm = (props) => {
 
   return (
     <div>
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <TextArea
-          errors={errors.hero?.title?.message}
-          title={"Hero title"}
-          isLoading={isLoading}
-          formProps={register("hero.title")}
-          id={"title"}
-        />
-        <TextArea
-          errors={errors.hero?.sub_title?.message}
-          title={"Hero Sub title"}
-          isLoading={isLoading}
-          formProps={register("hero.sub_title")}
-        />
-        <Input
-          errors={errors.hero?.button?.message}
-          title={"Hero Btn Text"}
-          isLoading={isLoading}
-          formProps={register("hero.button")}
-        />
+      <Form cls={css["form-custom-cls"]} onSubmit={handleSubmit(onSubmit)}>
+        <fieldset className={css["form-fieldset"]}>
+          <legend className={css["legend"]}>Hero</legend>
+
+          <TextArea
+            errors={errors.hero?.title?.message}
+            title={"Hero title"}
+            isLoading={isLoading}
+            formProps={register("hero.title")}
+            id={"title"}
+          />
+          <TextArea
+            errors={errors.hero?.sub_title?.message}
+            title={"Hero Sub title"}
+            isLoading={isLoading}
+            formProps={register("hero.sub_title")}
+          />
+          <Input
+            errors={errors.hero?.button?.message}
+            title={"Hero Btn Text"}
+            isLoading={isLoading}
+            formProps={register("hero.button")}
+          />
+        </fieldset>
+        <fieldset className={css["form-fieldset"]}>
+          <legend className={css["legend"]}>Contacts</legend>
+          <div className={css["contacts-field-set"]}>
+            <Input
+              errors={errors.contacts?.instagram?.message}
+              title={"instagram"}
+              isLoading={isLoading}
+              formProps={register("contacts.instagram")}
+            />
+            <Input
+              errors={errors.contacts?.facebook?.message}
+              title={"facebook"}
+              isLoading={isLoading}
+              formProps={register("contacts.facebook")}
+            />
+            <Input
+              errors={errors.contacts?.email?.message}
+              title={"email"}
+              isLoading={isLoading}
+              formProps={register("contacts.email")}
+            />
+            <Input
+              errors={errors.contacts?.tel?.tel_number.message}
+              title={"Telephone"}
+              isLoading={isLoading}
+              formProps={register("contacts.tel.tel_number")}
+            />
+            <Input
+              errors={errors.contacts?.tel?.responsible.message}
+              title={"Contact Person"}
+              isLoading={isLoading}
+              formProps={register("contacts.tel.responsible")}
+            />
+          </div>
+        </fieldset>
+
         <input className={"visually-hidden"} {...register("id")} />
+        <div></div>
         <FormButton isLoading={isLoading} />
-        {/* <div className={css["form-control"]}>
-          <label htmlFor="hero_btn">Address1</label>
-          <textarea id={"sub_title"} {...register("sub_title")} />
-          <p>{errors.hero_btn?.message}</p>  </div>
-        <div className={css["form-control"]}>
-          <label htmlFor="hero_btn">Address2</label>
-          <textarea id={"sub_title"} {...register("sub_title")} />
-          <p>{errors.hero_btn?.message}</p>  </div>
-
-        <div className={css["form-control"]}>
-          <label htmlFor="hero_btn">Instagram</label>
-          <input id={"hero_btn"} {...register("hero_btn")} />
-          <p>{errors.hero_btn?.message}</p>  </div>
-
-        <div className={css["form-control"]}>
-          <label htmlFor="hero_btn">Facebook</label>
-          <input id={"hero_btn"} {...register("hero_btn")} />
-          <p>{errors.hero_btn?.message}</p>  </div>
-
-
-        <div className={css["form-control"]}>
-          <label htmlFor="email">Email</label>
-          <input type='email' id={"email"} {...register("email")} />
-          <p>{errors.email?.message}</p>  </div>
-
-
-     <div className={css["form-control"]}>
-          <button className={cx(css["btn"], css["first"])}> Зберегти </button>
-        </div> */}
       </Form>
     </div>
   );

@@ -44,12 +44,12 @@ await queryClient.prefetchQuery(siteInfo,  getAdminInfo)
 
 
 
-const Basic = () => {
+const Basic = (props) => {
    const {data}= useQuery(siteInfo, getAdminInfo)
-console.log(data,'data887');
+console.log(props,'data887');
     return (
         <Layout>
-             <GeneralInfoForm id={data?._id} hero={data?.hero} />
+             <GeneralInfoForm id={data?._id} hero={data?.hero} contacts={data?.contacts} />
              </Layout>
     )
 }

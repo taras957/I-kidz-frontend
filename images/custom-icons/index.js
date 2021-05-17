@@ -7,7 +7,8 @@ import PrevIcon from "./prev-arrow";
 import NextIcon from "./next-arrow";
 import ArrowIcon from "./arrow";
 import Burger from "./burger";
-import  CloseIcon from "./close-icon";
+import CloseIcon from "./close-icon";
+import PlusIcon from "./plus";
 
 export {
   TelegramIcon,
@@ -19,5 +20,6 @@ export {
   NextIcon,
   ArrowIcon,
   Burger,
-   CloseIcon
+  CloseIcon,
+  PlusIcon,
 };

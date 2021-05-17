@@ -24,7 +24,7 @@
 }
 .form-control input {
   height: 50px;
-  width: 50%;
+  width: 100%;
 }
 .form-control input:focus {
   outline: 0;

@@ -6,8 +6,8 @@ const TextArea = (props) => {
     const {formProps, title, isLoading,errors} = props
     return (
          <div className={css["form-control"]}>
-          <label htmlFor="title">{ title}  <Spinner isLoading={isLoading}/></label> 
-          <textarea  id={"title"} {...formProps} />
+          <label htmlFor={title}>{ title}  <Spinner isLoading={isLoading}/></label> 
+          <textarea  id={title} {...formProps} />
           <p className={"error"}>{errors}</p>
         </div>
     )

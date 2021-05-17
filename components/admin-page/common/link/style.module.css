@@ -1,0 +1,17 @@
+.link {
+  padding: 5px 15px;
+  border-radius: 2px;
+  overflow: hidden;
+  border: none;
+  font-size: 1.4rem;
+  color: white;
+  font-weight: 400;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+.link:active {
+  font-size: 1.4rem;
+}
