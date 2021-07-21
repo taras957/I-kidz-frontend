@@ -16,9 +16,10 @@ const defaultValue = {
 const Testimonials = () => {
   const queryClient = useQueryClient();
 
-  const { testimonials: data } = queryClient.getQueryData(
+  const projectInfo = queryClient.getQueryData(
     projectBootstrapQuery
   );
+  const  { testimonials: data } =projectInfo || {testimonials:[] }
   const { i18n } = useTranslation();
 
   const { language } = i18n;
