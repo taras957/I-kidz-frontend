@@ -16,14 +16,16 @@ async function setToken(token) {
 
 async function getUser() {
   let user = null;
+  let userToken = null;
 
   const token = await getToken();
   if (token) {
     const { data } = await client("/get-user", { token });
 
     user = data?.user;
+    userToken = data?.token;
   }
-  return user;
+  return {user, token:userToken};
 }
 
 async function login(userCredentials) {
@@ -31,7 +33,7 @@ async function login(userCredentials) {
 
   const { data } = await client("/login", {
     data: userCredentials,
-       
+       withCredentials:true
 
   });
   const { token } = data;
@@ -68,8 +70,9 @@ export const AuthProvider = ({ children }) => {
       queryClient.invalidateQueries(userQuery);
     },
   });
+
   const value = React.useMemo(
-    () => ({ user: data, loginUser, isLoading, isFetched }),
+    () => ({ user: data?.user,token:data?.token, loginUser,  isLoading, isFetched }),
     [data, isLoading]
   );
   if (isLoading) {
@@ -86,8 +89,7 @@ export default AuthProvider;
 
 export const useUser = () => {
   const user = React.useContext(AuthContext);
-
   // const value = React.useMemo(() => ({ user, loginUser, isLoading }), []);
-
+console.log(user,'user23423432')
   return user;
 };

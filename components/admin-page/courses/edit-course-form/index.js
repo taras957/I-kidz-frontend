@@ -10,7 +10,7 @@ import { singleCourse, courseCategories } from "queries";
 
 import { useMutation, useQueryClient, useQuery } from "react-query";
 import { client } from "utils/api-client";
-
+import {useUser} from 'context/auth-provider'
 const getCourse = async (pid) => {
   const res = await client(`course/${pid}`);
 
@@ -53,7 +53,8 @@ const EditCourseForm = () => {
   const { pid } = router.query;
 
   const { data: categories } = useQuery(courseCategories, getCategories);
-
+const user =  useUser()
+const {token}=user
   const { i18n } = useTranslation();
   const { language } = i18n;
 
@@ -91,6 +92,7 @@ const EditCourseForm = () => {
       method: "PATCH",
       headers: { "Content-Type": "multipart/form-data" },
       isBlob: true,
+      token
     });
 
     return res.data[0];
