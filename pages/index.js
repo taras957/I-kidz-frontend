@@ -17,6 +17,7 @@ import Friends from "components/home/our-friends";
 import Gallery from "components/home/gallery";
 import Map from "components/home/map";
 // import Footer from "components/layout/footer";
+import { useRouter } from "next/router";
 
 const apiURL = process.env.NEXT_PUBLIC_API;
 const apiPrefix = process.env.NEXT_PUBLIC_API_PREFIX;
@@ -49,6 +50,10 @@ export default function Home() {
     refetchOnWindowFocus: false,
   });
   console.log(data, "data7777");
+  const router = useRouter();
+  if (router.isFallback) {
+    return <div>Loading...</div>
+  }
 
   return (
     <>
