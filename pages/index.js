@@ -50,10 +50,7 @@ export default function Home() {
     refetchOnWindowFocus: false,
   });
   console.log(data, "data7777");
-  const router = useRouter();
-  if (router.isFallback) {
-    return <div>Loading...</div>
-  }
+
 
   return (
     <>
