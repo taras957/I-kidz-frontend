@@ -7,8 +7,8 @@ import css from "./style.module.css";
 const Map = () => {
   const queryClient = useQueryClient();
   const data = queryClient?.getQueryData(projectBootstrapQuery);
-  const{HomeInfo} = data || {HomeInfo: {}}  
-  const { email, facebook, instagram } = data[0]?.contacts || {
+  const{HomeInfo} = data || {HomeInfo: []}  
+  const { email, facebook, instagram } = HomeInfo[0]?.contacts || {
     email: "",
     facebook: "",
     instagram: "",
