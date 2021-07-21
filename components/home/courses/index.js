@@ -14,7 +14,7 @@ const Courses = () => {
 
   const queryClient = useQueryClient();
 
-  const projectInfo = queryClient.getQueryData(
+  const projectInfo = queryClient?.getQueryData(
     projectBootstrapQuery
   );
 

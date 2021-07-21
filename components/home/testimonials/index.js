@@ -16,7 +16,7 @@ const defaultValue = {
 const Testimonials = () => {
   const queryClient = useQueryClient();
 
-  const projectInfo = queryClient.getQueryData(
+  const projectInfo = queryClient?.getQueryData(
     projectBootstrapQuery
   );
   const  { testimonials: data } =projectInfo || {testimonials:[] }
