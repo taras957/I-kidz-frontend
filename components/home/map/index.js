@@ -6,8 +6,8 @@ import { useQueryClient } from "react-query";
 import css from "./style.module.css";
 const Map = () => {
   const queryClient = useQueryClient();
-
-  const { HomeInfo: data } = queryClient.getQueryData(projectBootstrapQuery);
+  const data = queryClient?.getQueryData(projectBootstrapQuery);
+  const{HomeInfo} = data || {HomeInfo: {}}  
   const { email, facebook, instagram } = data[0]?.contacts || {
     email: "",
     facebook: "",
