@@ -18,7 +18,7 @@ const Hero = () => {
   const queryClient = useQueryClient();
 
   const data = queryClient?.getQueryData(projectBootstrapQuery);
-  const{HomeInfo} = data || {HomeInfo: {}}
+  const{HomeInfo} = data || {HomeInfo: []}
   const { language } = i18n;
   const { button, title, sub_title } = HomeInfo?.[0]?.hero[language] || {
     button: " ",
