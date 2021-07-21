@@ -19,7 +19,7 @@ const Hero = () => {
 
   const { HomeInfo } = queryClient.getQueryData(projectBootstrapQuery);
   const { language } = i18n;
-  const { button, title, sub_title } = HomeInfo[0]?.hero[language] || {
+  const { button, title, sub_title } = HomeInfo?.[0]?.hero[language] || {
     button: " ",
     title: " ",
     sub_title: " ",
