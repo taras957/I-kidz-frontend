@@ -14,9 +14,11 @@ const Courses = () => {
 
   const queryClient = useQueryClient();
 
-  const { HomeInfo: data, categories } = queryClient.getQueryData(
+  const projectInfo = queryClient.getQueryData(
     projectBootstrapQuery
   );
+
+  const { HomeInfo: data, categories } = projectInfo || {HomeInfo: [], categories:[] }
   // const { data } = useHomeInfo();
   // const { categories } = useCourseCategories();
 

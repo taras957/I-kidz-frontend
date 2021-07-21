@@ -30,10 +30,10 @@ const Team = () => {
 
   const queryClient = useQueryClient();
 
-  const { members: teamMembers } = queryClient.getQueryData(
+  const projectInfo = queryClient.getQueryData(
     projectBootstrapQuery
   );
-
+const  { members: teamMembers } = projectInfo || {members:[] }
   const { i18n } = useTranslation();
   const { language } = i18n;
   const [width] = useResizeObserver(ref);
