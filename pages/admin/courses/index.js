@@ -3,6 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { useTranslation } from "react-i18next";
 
 import CoursesList from "components/admin-page/courses";
+import { useRouter } from 'next/router'
 
 import { useHomeInfo, useCourseCategories } from "hooks/useHomePageInfo";
 
