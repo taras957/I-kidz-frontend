@@ -54,7 +54,7 @@ const Friends = () => {
 
   const queryClient = useQueryClient();
 
-  const projectInfo = queryClient.getQueryData(projectBootstrapQuery);
+  const projectInfo = queryClient?.getQueryData(projectBootstrapQuery);
 const { partners: data } = projectInfo || {partners:[]}
   return (
     <section className={css["root"]}>

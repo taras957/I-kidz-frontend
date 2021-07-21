@@ -30,7 +30,7 @@ const Team = () => {
 
   const queryClient = useQueryClient();
 
-  const projectInfo = queryClient.getQueryData(
+  const projectInfo = queryClient?.getQueryData(
     projectBootstrapQuery
   );
 const  { members: teamMembers } = projectInfo || {members:[] }
