@@ -1,73 +1,58 @@
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 
-import { siteInfo } from "queries";
+import { useTranslation } from "react-i18next";
 
 import CoursesList from "components/admin-page/courses";
 
-import { dehydrate } from "react-query/hydration";
+import { useHomeInfo, useCourseCategories } from "hooks/useHomePageInfo";
 
-import { useQuery, QueryClient } from "react-query";
-import { client } from "utils/api-client";
 import Layout from "components/admin-page/common/layout";
-import NewCourseLink from "components/admin-page/courses/new-course-link";
+import NewItemLink from "components/admin-page/common/new-item-link";
 import Box from "components/layout/box";
-import { getSorted } from "./utils";
-const getAdminInfo = async () => {
-  const res = await client("/home");
-  return res.data[0];
-};
-// This function gets called at build time on server-side.
-// It won't be called on client-side, so you can even do
-// direct database queries. See the "Technical details" section.
-
-export async function getStaticProps() {
-  const queryClient = new QueryClient();
-
-  await queryClient.prefetchQuery(siteInfo, getAdminInfo);
-
-  // Call an external API endpoint to get posts.
-  // You can use any data fetching library
-  //   const res = await fetch('https://.../posts')
-  //   const posts = await res.json()
-
-  // By returning { props: { posts } }, the Blog component
-  // will receive `posts` as a prop at build time
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-}
+import { AuthProvider } from "context/auth-provider";
 
 const Courses = () => {
-  const { data } = useQuery(siteInfo, getAdminInfo);
-  const { courses } = data || { courses: [] };
-  const childrenByCategoryList = getSorted(courses);
+  const { data } = useHomeInfo();
+  const { categories } = useCourseCategories();
+
+  const { i18n } = useTranslation();
+  const { language } = i18n;
+
   return (
-    <Layout>
-      <Tabs>
-        <TabList>
-          <Box>
-            {childrenByCategoryList.map((listItem) => {
-              const [, age] = listItem;
-              return <Tab>{age}</Tab>;
-            })}
-            <NewCourseLink />
-          </Box>
-        </TabList>
-        {childrenByCategoryList.map((listItem) => {
-          const [category] = listItem;
-          const coursesByCategory = data?.courses.filter(
-            (course) => course.category === category
-          );
-          return (
-            <TabPanel>
-              <CoursesList id={data?._id} courses={coursesByCategory} />
-            </TabPanel>
-          );
-        })}
-      </Tabs>
-    </Layout>
+    <AuthProvider>
+      <Layout>
+        <Tabs>
+          <TabList>
+            <Box>
+              {categories?.map((category) => {
+                const { label } = category[language];
+                return <Tab>{label}</Tab>;
+              })}
+              <NewItemLink path={"courses/new-course"}>
+                {" "}
+                Додати курс
+              </NewItemLink>
+            </Box>
+          </TabList>
+          {categories?.map((category) => {
+            const { value } = category[language];
+            const coursesByCategory = data?.courses
+              .filter((course) => course.category === value)
+              .map((course) => ({
+                _id: course._id,
+                is_active: course.is_active,
+                ...course.translations?.[language],
+              }));
+
+            return (
+              <TabPanel>
+                <CoursesList lang={language} courses={coursesByCategory} />
+              </TabPanel>
+            );
+          })}
+        </Tabs>
+      </Layout>
+    </AuthProvider>
   );
 };
 

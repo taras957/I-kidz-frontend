@@ -3,11 +3,11 @@ import { PlusIcon } from "images/custom-icons";
 import css from "./style.module.css";
 import Link from "components/admin-page/common/link";
 
-const NewCourse = () => {
+const NewItemLink = ({children,path}) => {
   return (
-    <Link cls={css["add-new-link"]} path={"courses/new-course"}>
+    <Link cls={css["add-new-link"]} path={path}>
       <div className={css["add-new-button"]}>
-        <div className={css["add-new-button-label"]}>Додати Курс</div>
+        <div className={css["add-new-button-label"]}>{children}</div>
         <div className={css["add-new-button-icon"]}>
           <i>
             <PlusIcon />
@@ -18,4 +18,4 @@ const NewCourse = () => {
   );
 };
 
-export default NewCourse;
+export default NewItemLink;

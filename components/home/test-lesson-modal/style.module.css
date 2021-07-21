@@ -1,0 +1,14 @@
+.lesson-form {
+  grid-template-columns: 1fr;
+  min-width: 350px;
+}
+.close {
+  display: block;
+  border: none;
+  background-color: transparent;
+  margin-left: auto;
+  cursor: pointer;
+}
+.close path {
+  fill: red;
+}

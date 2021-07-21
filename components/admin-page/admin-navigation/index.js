@@ -12,13 +12,13 @@ const config = [
         name:'Courses',
         href:"/admin/courses"
     },
-    {
-        name:'Development',
-        href:"/admin/developments"
-    },
+    // {
+    //     name:'Development',
+    //     href:"/admin/developments"
+    // },
     {
         name:'Our Friends',
-        href:"/admin/friends"
+        href:"/admin/partners"
     },
     {
         name:'Team',

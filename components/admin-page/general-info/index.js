@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
-
+import { useTranslation } from "react-i18next";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -14,13 +14,16 @@ import { client } from "utils/api-client";
 import { siteInfo } from "queries";
 import css from "./style.module.css";
 
-const schema = yup.object().shape({
-  hero: yup.object().shape({
-    title: yup.string().required().min(10).max(40),
-    sub_title: yup.string().required(),
-    button: yup.string().required(),
-  }),
-});
+const getSchema = (lang) =>
+  yup.object().shape({
+    hero: yup.object().shape({
+      [lang]: yup.object().shape({
+        title: yup.string().required().min(10).max(40),
+        sub_title: yup.string().required(),
+        button: yup.string().required(),
+      }),
+    }),
+  });
 
 const updateHomeInfo = async (data) => {
   const { id, ...params } = data;
@@ -31,6 +34,10 @@ const updateHomeInfo = async (data) => {
 const GeneralInfoForm = (props) => {
   const queryClient = useQueryClient();
 
+  const { i18n } = useTranslation();
+  const lang = i18n?.language;
+
+  console.log(lang);
   const { mutate, isLoading } = useMutation(updateHomeInfo, {
     onSuccess: () => {
       queryClient.invalidateQueries(siteInfo);
@@ -43,7 +50,7 @@ const GeneralInfoForm = (props) => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(getSchema(lang)),
   });
   const onSubmit = (data) => {
     mutate(data);
@@ -52,7 +59,9 @@ const GeneralInfoForm = (props) => {
   useEffect(() => {
     reset(props);
   }, [props, reset]);
+  console.log(errors);
 
+  if (!lang) return null;
   return (
     <div>
       <Form cls={css["form-custom-cls"]} onSubmit={handleSubmit(onSubmit)}>
@@ -60,23 +69,23 @@ const GeneralInfoForm = (props) => {
           <legend className={css["legend"]}>Hero</legend>
 
           <TextArea
-            errors={errors.hero?.title?.message}
+            errors={errors.hero?.[lang]?.title?.message}
             title={"Hero title"}
             isLoading={isLoading}
-            formProps={register("hero.title")}
+            formProps={register(`hero.${lang}.title`)}
             id={"title"}
           />
           <TextArea
-            errors={errors.hero?.sub_title?.message}
+            errors={errors.hero?.[lang]?.sub_title?.message}
             title={"Hero Sub title"}
             isLoading={isLoading}
-            formProps={register("hero.sub_title")}
+            formProps={register(`hero.${lang}.sub_title`)}
           />
           <Input
-            errors={errors.hero?.button?.message}
+            errors={errors.hero?.[lang]?.button?.message}
             title={"Hero Btn Text"}
             isLoading={isLoading}
-            formProps={register("hero.button")}
+            formProps={register(`hero.${lang}.button`)}
           />
         </fieldset>
         <fieldset className={css["form-fieldset"]}>

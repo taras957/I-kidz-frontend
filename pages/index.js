@@ -1,5 +1,8 @@
 import css from "./style.module.css";
 import Head from "next/head";
+import { projectBootstrapQuery } from "queries/index";
+import { QueryClient, useQuery } from "react-query";
+import { dehydrate } from "react-query/hydration";
 
 import Header from "components/layout/header";
 import Container from "components/layout/container";
@@ -13,9 +16,40 @@ import Courses from "components/home/courses";
 import Friends from "components/home/our-friends";
 import Gallery from "components/home/gallery";
 import Map from "components/home/map";
-import Footer from "components/layout/footer";
+// import Footer from "components/layout/footer";
+
+const apiURL = process.env.NEXT_PUBLIC_API;
+const apiPrefix = process.env.NEXT_PUBLIC_API_PREFIX;
+import Modal from "components/home/test-lesson-modal";
+import axios from "axios";
+
+export async function bootstrapApp() {
+  const bootstrap = await axios.get(`${apiURL}/${apiPrefix}/bootstrap`);
+  return bootstrap.data;
+}
+
+export async function getStaticProps() {
+  try {
+    const queryClient = new QueryClient();
+    await queryClient.prefetchQuery(projectBootstrapQuery, bootstrapApp);
+
+    return {
+      props: {
+        dehydratedState: dehydrate(queryClient),
+      },
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 export default function Home() {
+  const { data } = useQuery(projectBootstrapQuery, bootstrapApp, {
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  });
+  console.log(data, "data7777");
+
   return (
     <>
       <Head>
@@ -31,6 +65,7 @@ export default function Home() {
         ></script>
       </Head>
       <div className={css["root"]}>
+        <Modal />
         <Header />
         <WaveBackground>
           <Container>
@@ -50,7 +85,7 @@ export default function Home() {
           <Gallery />
         </Container>
         <Map />
-        <Footer>{(children) => <Container>{children}</Container>}</Footer>
+        {/* <Footer>{(children) => <Container>{children}</Container>}</Footer> */}
       </div>
     </>
   );

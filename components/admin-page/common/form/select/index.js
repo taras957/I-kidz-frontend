@@ -1,13 +1,13 @@
 import React from "react";
 import Select from "react-select";
-import { Controller } from 'react-hook-form';
+import { Controller } from "react-hook-form";
 
 import Spinner from "components/common/spinner";
 
 import css from "./style.module.css";
 
 const FormSelect = (props) => {
-  const { title,  errors, isLoading, options,value,control,name } = props;
+  const { title, isLoading, options, value, control, name } = props;
   return (
     <div className={css["form-control"]}>
       <label htmlFor={title}>
@@ -20,22 +20,20 @@ const FormSelect = (props) => {
         name={name}
         rules={{ required: true }}
         render={({
-    field: { onChange, onBlur, value, name, ref },
-    fieldState: { invalid, isTouched, isDirty, error },
-    formState,
-  }) => (
-      <>
-          <Select
-            className={css["custom-select"]}
-            options={options}
-            inputRef={ref}
-            value={options.find(c => c.value === value)}
-            onChange={val => onChange(val.value)}
-            required
-
-          />
-                <p className={"error"}>{JSON.stringify(error)}</p>
-</>
+          field: { onChange, value, ref },
+          fieldState: { error },
+        }) => (
+          <>
+            <Select
+              className={css["custom-select"]}
+              options={options}
+              inputRef={ref}
+              value={options?.find((c) => c?.value === value)}
+              onChange={(val) => onChange(val.value)}
+              required
+            />
+            <p className={"error"}>{JSON.stringify(error)}</p>
+          </>
         )}
       />
     </div>

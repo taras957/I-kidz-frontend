@@ -1,9 +1,10 @@
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(353px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
   gap: 15px;
   list-style: none;
   position: relative;
+  padding-top: 10px;
 }
 .section-title {
   font-family: LatoBl;
@@ -20,4 +21,22 @@
   left: 0px;
   z-index: -1;
   position: absolute;
+}
+.course-tab {
+  background-color: #86aeff;
+  color: white;
+  font-size: 16px;
+}
+.root :global(.react-tabs__tab--selected) {
+  background: #86aeff;
+  border-color: #86aeff;
+  color: white;
+  border-radius: 5px 5px 0 0;
+  font-size: 14px;
+}
+.root :global(.react-tabs__tab) {
+  font-size: 14px;
+}
+.root :global(.react-tabs__tab-list) {
+  border-bottom: 1px solid #00d6df;
 }

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Select, { components } from "react-select";
 import { useTranslation } from "react-i18next";
-
+import { useRouter } from "next/router";
 import { UkraineIcon, EnglandIcon, RussianIcon } from "images/custom-icons";
 import css from "./style.module.css";
+
 const options = [
   { value: "ua", label: "Українська", icon: UkraineIcon },
   { value: "rus", label: "Русский", icon: RussianIcon },
@@ -12,7 +13,6 @@ const options = [
 
 const customStyles = {
   control: () => ({
-    // none of react-select's styles are passed to <Control />
     background: "transparent",
     alignItems: "center",
     borderRadius: "4px",
@@ -65,12 +65,28 @@ const IconOption = (props) => {
   );
 };
 const LanguageSelect = () => {
+  const router = useRouter();
   const { t, i18n } = useTranslation();
   const [state, setState] = useState(options[0]);
+
+  const language = i18n?.language;
+
   const onLanguageChange = (data) => {
     setState(data);
+    // router.push({
+    //   query: { ...router.query, lang: data.value },
+    // });
     i18n.changeLanguage(data.value);
   };
+
+  useEffect(() => {
+    if (router) {
+      // router.push({
+      //   query: { ...router.query, lang: language },
+      // });
+    }
+  }, []);
+
   return (
     <div>
       <Select

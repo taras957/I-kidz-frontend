@@ -3,9 +3,10 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useTranslation } from "react-i18next";
 
 import { client } from "utils/api-client";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient, useQuery } from "react-query";
 
 import Form from "components/admin-page/common/form/form";
 import TextArea from "components/admin-page/common/form/textarea";
@@ -13,55 +14,72 @@ import Input from "components/admin-page/common/form/input";
 import FormButton from "components/admin-page/common/form/form-btn";
 import FormSelect from "components/admin-page/common/form/select";
 
-import { siteInfo } from "queries";
+import { getCategories } from "hooks/useHomePageInfo";
+import { siteInfo, courseCategories } from "queries";
 
 import css from "./style.module.css";
 
-const schema = yup.object().shape({
-  // title: yup.string().required().min(5).max(40),
-  // subtitle: yup.string().required().min(5).max(40),
-  // price: yup.number().required(),
-  // duration: yup.string().required(),
-  // description: yup.string().required(),
-  // category: yup.string().required(),
-});
-
-const createCourse = async (data) => {
-  const { picture, ...restParams } = data;
-  const res = await client(`/course/create`, {
-    data: restParams,
+const getSchema = (lang) =>
+  yup.object().shape({
+    translations: yup.object().shape({
+      [lang]: yup.object().shape({
+        title: yup.string().required().min(5).max(40),
+        subtitle: yup.string().required(),
+        price: yup.string().required(),
+        duration: yup.string().required(),
+        description: yup.string().required(),
+      }),
+    }),
+    category: yup.string().required(),
   });
 
-  const fd = new FormData();
-
-  fd.append("image", picture.current.files[0], picture.current.files[0].name);
-  const imageRes = await client(`/course/image/create/${res.data._id}`, {
-    data: fd,
-    method: "POST",
-    headers: { "Content-Type": "multipart/form-data" },
-    isBlob: true,
-  });
-  console.log(res.data._id, "response345435");
-  return res;
+const defaultValues = {
+  title: "",
+  subtitle: "",
+  price: "",
+  age: "",
+  duration: "",
+  description: "",
+  category: "",
+  picture: null,
 };
-
-const options = [
-  { value: "trainee", label: "6-8 років" },
-  { value: "junior", label: "8-10 років" },
-  { value: "strong-junior", label: "10-12 років" },
-  { value: "middle", label: "12-14 років" },
-  { value: "senior", label: "14-16 років" },
-];
 
 const CourseForm = () => {
   const queryClient = useQueryClient();
   const fileInput = React.useRef();
+  const { data: categories } = useQuery(courseCategories, getCategories);
 
+  const { i18n } = useTranslation();
+
+  const { language } = i18n;
+  const courseCategoriesOptions = categories?.map(
+    (options) => options[language]
+  );
+
+  const createCourse = async (data) => {
+    const { picture, translations, category } = data;
+
+    const fd = new FormData();
+
+    fd.append("category", category);
+    fd.append("translations", JSON.stringify(translations));
+
+    fd.append("image", picture.current.files[0], picture.current.files[0].name);
+    await client(`/course/create`, {
+      data: fd,
+      method: "POST",
+      headers: { "Content-Type": "multipart/form-data" },
+      isBlob: true,
+    });
+    // reset(defaultValues);
+    return res;
+  };
   const { mutate, isLoading } = useMutation(createCourse, {
     onSuccess: () => {
       queryClient.invalidateQueries(siteInfo);
     },
   });
+
   const {
     register,
     reset,
@@ -69,48 +87,31 @@ const CourseForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    defaultValues,
+    resolver: yupResolver(getSchema(language)),
   });
-  const onSubmit = (_data) => {
-    const { label } = options.find((o) => o.value === _data.category);
-    // const data = { ...data };
-    //  console.log(
-    //   "onSubmitFn:",
-    //   data,
-    //   "  imageFile: ",
-    //   fileInput.current.files[0].name
-    // );
-    // const fd = new FormData();
-    // for (let key in data) {
-    //   fd.append(key, data[key]); // formdata doesn't take objects
-    // }
-    // fd.append(
-    //   "image",
-    //   fileInput.current.files[0],
-    //   fileInput.current.files[0].name
-    // );
-    // console.log(fileInput.current.files[0], "fileInput.current");
 
-    mutate({ ..._data, age: label, picture: fileInput });
+  const onSubmit = (_data) => {
+    mutate({ ..._data, picture: fileInput });
   };
-  console.log(errors, "errors");
+  console.log(errors, " errors4234234");
   return (
     <Form cls={css["course-style"]} onSubmit={handleSubmit(onSubmit)}>
       <Input
-        errors={errors?.title?.message}
+        errors={errors?.translations?.[language]?.title?.message}
         title={"Назва Курсу"}
         isLoading={isLoading}
-        formProps={register("title")}
+        formProps={register(`translations.${language}.title`)}
       />
       <Input
-        errors={errors?.subtitle?.message}
-        title={"Назва Курсу"}
+        errors={errors?.translations?.[language]?.subtitle?.message}
+        title={"Підзаголовок"}
         isLoading={isLoading}
-        formProps={register("subtitle")}
+        formProps={register(`translations.${language}.subtitle`)}
       />
 
       <FormSelect
-        options={options}
+        options={courseCategoriesOptions}
         isLoading={isLoading}
         errors={errors.category?.message}
         title={"Вікова Група"}
@@ -119,30 +120,31 @@ const CourseForm = () => {
       />
 
       <Input
-        errors={errors.price?.message}
+        errors={errors?.translations?.[language]?.price?.message}
         title={"Ціна"}
         isLoading={isLoading}
-        formProps={register("price")}
+        formProps={register(`translations.${language}.price`)}
       />
       <Input
-        errors={errors.duration?.message}
+        errors={errors?.translations?.[language]?.duration?.message}
         title={"Тривалість"}
         isLoading={isLoading}
-        formProps={register("duration")}
+        formProps={register(`translations.${language}.duration`)}
       />
       <TextArea
-        errors={errors.description?.message}
+        errors={errors?.translations?.[language]?.description?.message}
         title={"Опис"}
         isLoading={isLoading}
-        formProps={register("description")}
+        formProps={register(`translations.${language}.description`)}
         id={"title"}
       />
-      <input ref={fileInput} type='file' name='picture' />
+      <input ref={fileInput} type="file" name="picture" />
       <input
         value={true}
         {...register("is_active")}
         className={"visually-hidden"}
       />
+
       <FormButton isLoading={isLoading} />
     </Form>
   );

@@ -1,5 +1,12 @@
 {
     "translations": {
+        "test-lesson-form":{
+            "name": "Ім'я",
+            "save":"Зберегти",
+            "progress":"Збереження",
+            "phone": "Телефон"
+
+        },
         "nav": [
             "Про нас",
             "Розвиток",

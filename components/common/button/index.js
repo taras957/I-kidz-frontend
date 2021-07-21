@@ -1,8 +1,8 @@
 import React from "react";
 import css from "./style.module.css";
-const Button = ({ children, styles,setRef=()=>{} }) => {
+const Button = ({ children, styles,setRef=()=>{} ,onClick }) => {
   return (
-    <button ref={(ref) => setRef(ref)} className={`${css["btn"]} ${css["btn_r"]}  ${styles}`}>
+    <button onClick={onClick} ref={(ref) => setRef(ref)} className={`${css["btn"]} ${css["btn_r"]}  ${styles}`}>
       {children}
     </button>
   );

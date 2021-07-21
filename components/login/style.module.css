@@ -1,0 +1,6 @@
+.login-form {
+  max-width: 30%;
+  min-width: 250px;
+  grid-template-columns: repeat(1, 1fr);
+  padding-top: 10%;
+}

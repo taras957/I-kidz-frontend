@@ -1,10 +1,28 @@
 import React from "react";
 import Slider from "react-slick";
 import { NextArrow, PrevArrow } from "components/common/slider-arrows";
-import { reviews } from "./mock";
+import { useTestimonials, useSingleTestimonial } from "hooks/useTestimonials";
+import { useTranslation } from "react-i18next";
+import { projectBootstrapQuery } from "queries/index";
+import { useQueryClient } from "react-query";
+
 import css from "./style.module.css";
 
+const defaultValue = {
+  description: "Переклад Відсутній",
+  title: "Переклад Відсутній",
+};
+
 const Testimonials = () => {
+  const queryClient = useQueryClient();
+
+  const { testimonials: data } = queryClient.getQueryData(
+    projectBootstrapQuery
+  );
+  const { i18n } = useTranslation();
+
+  const { language } = i18n;
+  const activeItems = data?.filter((node) => node.is_active);
   const settings = {
     dots: true,
     arrows: true,
@@ -18,8 +36,9 @@ const Testimonials = () => {
   return (
     <section className={css["testimonial"]}>
       <Slider {...settings}>
-        {reviews.map((node) => {
-          const { text, name } = node;
+        {activeItems?.map((node) => {
+          const { description, title } =
+            node.translations[language] || defaultValue;
           return (
             <div className={css["sd_master_wrapper"]}>
               <div className={css["sdtestBg2"]}></div>
@@ -29,9 +48,11 @@ const Testimonials = () => {
                   <div className={css["btnNtxt"]}>
                     <div className={css["sdAllContent"]}>
                       <div className={css["sd_scroll"]}>
-                        <h1 className={css["sdCustomSliderHeadig"]}>{text}</h1>
+                        <h1 className={css["sdCustomSliderHeadig"]}>
+                          {description}
+                        </h1>
                       </div>
-                      <p className={css["SdClientName"]}>{name}</p>
+                      <p className={css["SdClientName"]}>{title}</p>
                     </div>
                   </div>
                 </div>

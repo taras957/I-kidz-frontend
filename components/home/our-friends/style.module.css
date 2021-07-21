@@ -2,15 +2,32 @@
   z-index: 0;
   padding: 15rem 0;
 }
+.root :global(.slick-slide > div),
+.root :global(.slick-slide > div > div) {
+  height: 100%;
+}
+
+.root :global(.slick-slide) {
+  padding: 8px;
+}
+.root :global(.slick-track) {
+  gap: 30px;
+}
+.root a {
+  display: block;
+  height: 100%;
+}
 .cards {
   display: grid;
-  grid-template-columns: auto;
+  /* grid-template-columns: auto; */
 }
 .card {
   /* width: 180px;
   height: 250px; */
+  height: 100%;
+  min-height: 250px;
   padding: 1.5rem;
-  background: #fafafa;
+  box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
   margin: 0 1rem 1rem 1em;
   align-items: center;
   border-radius: 3px;
@@ -47,8 +64,5 @@
 }
 .avatar {
   object-fit: scale-down;
+  width: 100%;
 }
-/* .logo-link {
-  display: block;
-  height: 100%;
-} */

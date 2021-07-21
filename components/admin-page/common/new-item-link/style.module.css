@@ -66,4 +66,7 @@
 }
 .add-new-link {
   margin-left: auto;
+  max-width: 140px;
+  display: flex;
+  justify-content: flex-end !important;
 }

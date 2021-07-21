@@ -111,6 +111,18 @@ a {
   filter: grayscale(80%);
   cursor: progress;
 }
+
+.toggle-center {
+  left: 50%;
+  transform: translateX(-50%);
+}
+html {
+  scroll-behavior: smooth;
+}
+
+.ReactModal__Overlay {
+  z-index: 12;
+}
 @media (max-width: 1280px) {
   html,
   body {

@@ -1,5 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+// import { projectBootstrapQuery } from "queries/index";
+// import { useQueryClient } from "react-query";
 
 import css from "./style.module.css";
 const config = [
@@ -27,9 +29,11 @@ const config = [
 
 const Development = () => {
   const { t } = useTranslation();
+  // const queryClient = useQueryClient();
 
+  // const { HomeInfo } = queryClient.getQueryData(projectBootstrapQuery);
   return (
-    <section className={css["root"]}>
+    <section id="development" className={css["root"]}>
       <h5 className={css["section-title"]}> {t("development.title")} </h5>
       <ul className={css["cards"]}>
         {config.map((c) => {

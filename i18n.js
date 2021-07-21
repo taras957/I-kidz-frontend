@@ -4,6 +4,7 @@ import { initReactI18next } from "react-i18next";
 import XHR from "i18next-xhr-backend";
 import languageUA from "./locate/ua/translate.json";
 import languageRUS from "./locate/rus/translate.json";
+import languageENG from "./locate/eng/translate.json";
 
 i18n
   .use(XHR)
@@ -13,6 +14,7 @@ i18n
     resources: {
       ua: languageUA,
       rus: languageRUS,
+      eng: languageENG,
     },
     /* default language when load the website in browser */
     lng: "ua",
