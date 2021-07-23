@@ -33,7 +33,6 @@ async function login(userCredentials) {
 
   const { data } = await client("/login", {
     data: userCredentials,
-       withCredentials:true
 
   });
   const { token } = data;
