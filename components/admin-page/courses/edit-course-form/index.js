@@ -182,7 +182,7 @@ const {token}=user
         className={"visually-hidden"}
       />
       <input value={true} {...register("_id")} className={"visually-hidden"} />
-      <img className={css["course-image"]} src={path} />
+      <img className={css["course-image"]} alt="course picture" src={path} />
       <FormButton isLoading={isLoading} />
     </Form>
   );
