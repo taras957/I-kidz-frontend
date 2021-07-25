@@ -54,6 +54,7 @@ const  { members: teamMembers } = projectInfo || {members:[] }
                     width={80}
                     height={80}
                     style={{ borderRadius: "50% 50% 50% 5px" }}
+                    alt='photo'
                   />
                 </div>
                 <p className={css["name"]}>{translated.title}</p>
@@ -77,6 +78,7 @@ const  { members: teamMembers } = projectInfo || {members:[] }
                       width={80}
                       height={80}
                       style={{ borderRadius: "50% 50% 50% 5px" }}
+                      alt='photo'
                     />
                   </div>
                   <p className={css["name"]}>{translated.title}</p>

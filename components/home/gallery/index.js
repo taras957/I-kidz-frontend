@@ -95,10 +95,8 @@ const Gallery = () => {
             const imgPath = `https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`;
             return (
               <figure key={photo.id} className={css["card"]}>
-                {/* <div className={css["icon-wrapper"]}> */}
-                <img src={imgPath} className={css["icon"]} />
-                {/* </div> */}
-                {/* <p className={css["title"]}>{photo.title} </p> */}
+                <img src={imgPath} alt="gallery photo" className={css["icon"]} />
+     
               </figure>
             );
           })}
@@ -111,7 +109,7 @@ const Gallery = () => {
             return (
               <div>
                 <div className={css["card"]}>
-                  <img src={imgPath} />
+                  <img alt='photo' src={imgPath} />
                 </div>
               </div>
             );

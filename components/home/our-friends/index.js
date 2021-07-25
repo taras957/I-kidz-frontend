@@ -73,6 +73,7 @@ const { partners: data } = projectInfo || {partners:[]}
                       src={path}
                       // width={150}
                       height={200}
+                      alt='logo'
                     />
                   </div>
                   <p className={css["name"]}>

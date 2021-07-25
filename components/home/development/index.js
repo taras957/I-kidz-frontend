@@ -40,7 +40,7 @@ const Development = () => {
           return (
             <li key={c.key1} className={css["card"]}>
               <div className={css["icon-wrapper"]}>
-                <img src={c.src} className={css["icon"]} />
+                <img alt='development pic' src={c.src} className={css["icon"]} />
               </div>
               <p className={css["title"]}>{t(c.key1)} </p>
               <p className={css["subtitle"]}>{t(c.key2)} </p>
