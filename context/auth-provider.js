@@ -33,7 +33,6 @@ async function login(userCredentials) {
 
   const { data } = await client("/login", {
     data: userCredentials,
-       withCredentials:true
 
   });
   const { token } = data;
@@ -43,9 +42,8 @@ async function login(userCredentials) {
   user = data;
   return data.user;
 }
-// const tenMinutes = 600000;
 export const AuthProvider = ({ children }) => {
-  const { data, isLoading, isFetched, isIdle, isFetching } = useQuery(
+  const { data, isLoading, isFetched } = useQuery(
     userQuery,
     getUser,
     {
@@ -71,14 +69,22 @@ export const AuthProvider = ({ children }) => {
     },
   });
 
+  const logOut = async() => {
+    await setToken(null)
+    await  moveHome()
+  }
+
+  const moveHome = async () =>     router.push("/");
+
   const value = React.useMemo(
-    () => ({ user: data?.user,token:data?.token, loginUser,  isLoading, isFetched }),
+    () => ({ user: data?.user,token:data?.token, loginUser, logOut,moveHome, isLoading, isFetched }),
     [data, isLoading]
   );
+
   if (isLoading) {
     return <div>Loading</div>;
   }
-  if (!data && isFetched && router.pathname !== "/login") {
+  if (!data?.user && isFetched && router.pathname !== "/login") {
     router.push("/login");
     return <div>Loading</div>;
   }
@@ -89,7 +95,5 @@ export default AuthProvider;
 
 export const useUser = () => {
   const user = React.useContext(AuthContext);
-  // const value = React.useMemo(() => ({ user, loginUser, isLoading }), []);
-console.log(user,'user23423432')
   return user;
 };

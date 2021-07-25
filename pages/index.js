@@ -1,5 +1,6 @@
 import css from "./style.module.css";
 import Head from "next/head";
+import Script from "next/script";
 import { projectBootstrapQuery } from "queries/index";
 import { QueryClient, useQuery } from "react-query";
 import { dehydrate } from "react-query/hydration";
@@ -60,10 +61,7 @@ export default function Home() {
           href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700;800&display=swap"
           rel="stylesheet"
         ></link>
-        <script
-          type="text/javascript"
-          src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyACkxqpBmKSrBtab20EBdxZNDDxZRuoOSc"
-        ></script>
+    
       </Head>
       <div className={css["root"]}>
         <Modal />
@@ -88,6 +86,7 @@ export default function Home() {
         <Map />
         {/* <Footer>{(children) => <Container>{children}</Container>}</Footer> */}
       </div>
+     
     </>
   );
 }
