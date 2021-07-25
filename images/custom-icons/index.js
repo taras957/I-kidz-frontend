@@ -9,6 +9,8 @@ import ArrowIcon from "./arrow";
 import Burger from "./burger";
 import CloseIcon from "./close-icon";
 import PlusIcon from "./plus";
+import LogOutIcon from "./log-out";
+import Home from "./home";
 
 export {
   TelegramIcon,
@@ -22,4 +24,5 @@ export {
   Burger,
   CloseIcon,
   PlusIcon,
+  LogOutIcon,Home
 };

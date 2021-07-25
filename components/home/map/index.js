@@ -1,153 +1,195 @@
-import React, { useEffect } from "react";
-import { useHomeInfo } from "hooks/useHomePageInfo";
+import React, { useEffect, useState } from "react";
+import { GoogleMap, useJsApiLoader ,InfoWindow} from "@react-google-maps/api";
+import { Marker } from "@react-google-maps/api";
+
 import { projectBootstrapQuery } from "queries/index";
 import { useQueryClient } from "react-query";
 
 import css from "./style.module.css";
+  const center = { lat: 49.224893, lng: 28.451423 }; // Vinnytsia
+  const options = {
+    // How zoomed in you want the map to start at (always required)
+    zoom: 14,
+    scrollwheel: false,
+    disableDefaultUI: true,
+    // gestureHandling: 'none',
+    styles: [
+      {
+        featureType: "administrative",
+        elementType: "all",
+        stylers: [
+          {
+            visibility: "simplified",
+          },
+        ],
+      },
+      {
+        featureType: "landscape",
+        elementType: "geometry",
+        stylers: [
+          {
+            visibility: "simplified",
+          },
+          {
+            color: "#fcfcfc",
+          },
+        ],
+      },
+      {
+        featureType: "poi",
+        elementType: "geometry",
+        stylers: [
+          {
+            visibility: "simplified",
+          },
+          {
+            color: "#fcfcfc",
+          },
+        ],
+      },
+      {
+        featureType: "road.highway",
+        elementType: "geometry",
+        stylers: [
+          {
+            visibility: "simplified",
+          },
+          {
+            color: "#dddddd",
+          },
+        ],
+      },
+      {
+        featureType: "road.arterial",
+        elementType: "geometry",
+        stylers: [
+          {
+            visibility: "simplified",
+          },
+          {
+            color: "#dddddd",
+          },
+        ],
+      },
+      {
+        featureType: "road.local",
+        elementType: "geometry",
+        stylers: [
+          {
+            visibility: "simplified",
+          },
+          {
+            color: "#eeeeee",
+          },
+        ],
+      },
+      {
+        featureType: "water",
+        elementType: "geometry",
+        stylers: [
+          {
+            visibility: "simplified",
+          },
+          {
+            color: "#dddddd",
+          },
+        ],
+      },
+    ],
+  };
+  const markers = [
+    {
+      id: 1,
+      name: "iKIDZ, м. Вінниця вул. Городецького, 7",
+      position: { lat: 49.23013, lng: 28.463489 },
+    },
+    {
+      id: 2,
+      name: "iKIDZ, м. Вінниця, вул, Сонячна, 9",
+      position: { lat: 49.235795, lng: 28.469551 },
+    },
+    {
+      id: 3,
+      name: "iKIDZ, м. Вінниця вул. Козицького, 7",
+      position: { lat: 49.237288, lng: 28.469758 },
+    },
+  ];
 const Map = () => {
+
   const queryClient = useQueryClient();
   const data = queryClient?.getQueryData(projectBootstrapQuery);
-  const{HomeInfo} = data || {HomeInfo: []}  
+  const { HomeInfo } = data || { HomeInfo: [] };
   const { email, facebook, instagram } = HomeInfo[0]?.contacts || {
     email: "",
     facebook: "",
     instagram: "",
   };
-  function init() {
-    // Basic options for a simple Google Map
-    // For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
-    var mapOptions = {
-      // How zoomed in you want the map to start at (always required)
-      zoom: 14,
-      scrollwheel: false,
-      disableDefaultUI: true,
 
-      // The latitude and longitude to center the map (always required)
-      center: new google.maps.LatLng(49.224893, 28.451423), // Vinnytsia
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_URL,
+  });
 
-      // How you would like to style the map.
-      // This is where you would paste any style found on Snazzy Maps.
-      styles: [
-        {
-          featureType: "administrative",
-          elementType: "all",
-          stylers: [
-            {
-              visibility: "simplified",
-            },
-          ],
-        },
-        {
-          featureType: "landscape",
-          elementType: "geometry",
-          stylers: [
-            {
-              visibility: "simplified",
-            },
-            {
-              color: "#fcfcfc",
-            },
-          ],
-        },
-        {
-          featureType: "poi",
-          elementType: "geometry",
-          stylers: [
-            {
-              visibility: "simplified",
-            },
-            {
-              color: "#fcfcfc",
-            },
-          ],
-        },
-        {
-          featureType: "road.highway",
-          elementType: "geometry",
-          stylers: [
-            {
-              visibility: "simplified",
-            },
-            {
-              color: "#dddddd",
-            },
-          ],
-        },
-        {
-          featureType: "road.arterial",
-          elementType: "geometry",
-          stylers: [
-            {
-              visibility: "simplified",
-            },
-            {
-              color: "#dddddd",
-            },
-          ],
-        },
-        {
-          featureType: "road.local",
-          elementType: "geometry",
-          stylers: [
-            {
-              visibility: "simplified",
-            },
-            {
-              color: "#eeeeee",
-            },
-          ],
-        },
-        {
-          featureType: "water",
-          elementType: "geometry",
-          stylers: [
-            {
-              visibility: "simplified",
-            },
-            {
-              color: "#dddddd",
-            },
-          ],
-        },
-      ],
-    };
 
-    // Get the HTML DOM element that will contain your map
-    // We are using a div with id="map" seen below in the <body>
-    var mapElement = document.getElementById("map");
+  const containerStyle = {
+    width: "100%",
+    height: "550px",
+  };
+  const [map, setMap] = useState(null);
+  const [activeMarker, setActiveMarker] = useState(null);
 
-    // Create the Google Map using our element and options defined above
-    var map = new google.maps.Map(mapElement, mapOptions);
+  const handleActiveMarker = (marker) => {
+    if (marker === activeMarker) {
+      return;
+    }
+    setActiveMarker(marker);
+  };
 
-    // Let's also add a marker while we're at it
-    var marker = new google.maps.Marker({
-      position: new google.maps.LatLng(49.23013, 28.463489),
-      map: map,
-      title: "iKIDZ, м. Вінниця вул. Городецького, 7",
-    });
-
-    var marker = new google.maps.Marker({
-      position: new google.maps.LatLng(49.235795, 28.469551),
-      map: map,
-      title: "iKIDZ, м. Вінниця, вул, Сонячна, 9",
-    });
-
-    var marker = new google.maps.Marker({
-      position: new google.maps.LatLng(49.237288, 28.469758),
-      map: map,
-      title: "iKIDZ, м. Вінниця вул. Козицького, 7",
-    });
-  }
-  useEffect(() => {
-    document.addEventListener("DOMContentLoaded", init);
-    //  google.maps.event.addDomListener(window, "load", init);
+  const onLoad = React.useCallback(function callback(map) {
+    // const bounds = new window.google.maps.LatLngBounds();
+    // map.fitBounds(bounds);
+    setMap(map);
   }, []);
 
+  const onUnmount = React.useCallback(function callback(map) {
+    setMap(null);
+  }, []);
+
+
   return (
-    <section id="contacts" className={css["map-section"]}>
-      <div className={css["map"]} id="map">
-        {" "}
-      </div>
+    <section
+      id="contacts"
+      className={css["map-section"]}
+    >
+      {isLoaded ? (
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={center}
+          onClick={() => setActiveMarker(null)}
+          zoom={14}
+          options={options}
+          onLoad={onLoad}
+          onUnmount={onUnmount}
+        >
+          {/* Child components, such as markers, info windows, etc. */}
+          {markers.map(({ id, name, position }) => (
+            <Marker
+              title={ name}
+              position={position}
+              onMouseOver={() => handleActiveMarker(id)}
+              onMouseOut={() => handleActiveMarker(null)}
+            >
+              {activeMarker === id ? (
+                <InfoWindow onCloseClick={() => setActiveMarker(null)}>
+                  <div>{name}</div>
+                </InfoWindow>
+              ) : null}
+            </Marker>
+          ))}
+        </GoogleMap>
+      ) : (
+        <></>
+      )}
       <div className={css["contacts"]}>
         <div className={css["c_head"]}>контакти</div>
 
@@ -197,4 +239,4 @@ const Map = () => {
   );
 };
 
-export default Map;
+export default React.memo(Map);
