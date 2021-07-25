@@ -66,7 +66,7 @@ const PartnersForm = (props) => {
           isLoading={isLoading}
           formProps={register(`link`)}
         />
-   <img src={imgPath} alt="photo" />
+   <img alt='partner logo' src={imgPath} alt="photo" />
       <input {...register('image')} type='file' />
         <FormButton isLoading={isLoading} />
 

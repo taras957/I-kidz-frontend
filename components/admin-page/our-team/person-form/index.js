@@ -83,7 +83,7 @@ console.log(values,'errors')
         <FormButton isLoading={isLoading} />
       </fieldset>
       <fieldset>
-      <img src={imgPath} alt="person-photo" />
+      <img alt='person photo' src={imgPath} alt="person-photo" />
       <input {...register('image')} type='file' />
       <input {...register('_id')}  className={"visually-hidden"} />
       </fieldset>
