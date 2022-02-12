@@ -11,9 +11,10 @@ import {
 } from 'interfaces/home';
 import { projectBootstrapQuery } from 'queries';
 import { useTranslation } from 'react-i18next';
-import { useQueryClient } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
+import { bootstrapApp } from '../pages';
 
-let flatten = {
+const flatten = {
   categories: [],
   courses: [],
   hero: null,
@@ -35,9 +36,29 @@ export function useHomePage() {
 
   const queryClient = useQueryClient();
 
-  const projectInfo = queryClient.getQueryData<IProjectBootstrap>(
-    projectBootstrapQuery
-  );
+  const {
+    data: projectInfo,
+    isLoading,
+    isError,
+  } = useQuery<IProjectBootstrap, Error>(projectBootstrapQuery, bootstrapApp, {
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  });
+
+  // const projectInfo = queryClient.getQueryData<IProjectBootstrap>(
+  //   projectBootstrapQuery
+  // );
+
+  // const projectInfoCache = queryClient.fetchQuery<IProjectBootstrap>(
+  //   projectBootstrapQuery,
+  //   bootstrapApp,
+  //   {
+  //     staleTime: 10000,
+  //   }
+  // );
+  // const projectInfoState = queryClient.getQueryState<IProjectBootstrap>(
+  //   projectBootstrapQuery
+  // );
 
   function parseTranslation<T extends ITranslationParse<K>, K>(list: T[]) {
     return list.map(({ translations, ...course }) => ({
@@ -68,8 +89,10 @@ export function useHomePage() {
       testimonials: parseTranslation<ITestimonial, ITestimonialTranslation>(
         testimonials
       ),
+      isError,
+      isLoading,
     };
   }
 
-  return flatten;
+  return { ...flatten, isError, isLoading };
 }

@@ -4,6 +4,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'react-tabs/style/react-tabs.css';
 import 'react-toggle/style.css'; // for ES6 modules
+import 'react-loading-skeleton/dist/skeleton.css';
 
 import SpinnerLarge from '../components/common/spinner-large';
 import Providers from 'context';

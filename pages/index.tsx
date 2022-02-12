@@ -44,11 +44,6 @@ export async function getStaticProps() {
 }
 
 export default function Home() {
-  useQuery<IProjectBootstrap, Error>(projectBootstrapQuery, bootstrapApp, {
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  });
-
   return (
     <>
       <Head>

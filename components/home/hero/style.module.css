@@ -71,7 +71,9 @@
   bottom: 20px;
   z-index: 1001;
 }
-
+.error_wrapper {
+  padding-top: 70px;
+}
 @media (max-width: 1194px) {
   .root {
     display: flex;
