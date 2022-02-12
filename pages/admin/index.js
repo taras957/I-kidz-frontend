@@ -1,21 +1,21 @@
-import React from "react";
-import axios from "axios";
-import { dehydrate } from "react-query/hydration";
-import { useRouter } from "next/router";
+import React from 'react';
+import axios from 'axios';
+import { dehydrate } from 'react-query/hydration';
+import { useRouter } from 'next/router';
 import {
   useQuery,
   useMutation,
   useQueryClient,
   QueryClient,
   QueryClientProvider,
-} from "react-query";
-import { client } from "utils/api-client";
-import Layout from "components/admin-page/common/layout";
-import { siteInfo } from "queries";
-import { AuthProvider } from "context/auth-provider";
+} from 'react-query';
+import { client } from 'utils/api-client';
+import Layout from 'components/admin-page/common/layout';
+import { siteInfo } from 'queries';
+import { AuthProvider } from 'context/auth-provider';
 
 const getAdminInfo = async () => {
-  const res = await client("/home");
+  const res = await client('/home');
   return res.data[0];
 };
 // This function gets called at build time on server-side.
@@ -44,9 +44,9 @@ export async function getStaticProps() {
 const AdminPage = () => {
   const data = useQuery(siteInfo, getAdminInfo);
   const router = useRouter();
-  console.log("admin");
-  if (typeof window !== "undefined") {
-    router.push("/admin/basic?lang=ua");
+
+  if (typeof window !== 'undefined') {
+    router.push('/admin/basic?lang=ua');
   }
 
   return (

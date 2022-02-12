@@ -12,3 +12,7 @@
 .close path {
   fill: red;
 }
+.success {
+  color: green;
+  font-size: 12px;
+}
