@@ -1,18 +1,18 @@
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "react-query";
-import { useTranslation } from "react-i18next";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { useMutation, useQueryClient } from 'react-query';
+import { useTranslation } from 'react-i18next';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
-import Form from "components/admin-page/common/form/form";
-import TextArea from "components/admin-page/common/form/textarea";
-import Input from "components/admin-page/common/form/input";
-import FormButton from "components/admin-page/common/form/form-btn";
+import Form from 'components/admin-page/common/form/form';
+import TextArea from 'components/admin-page/common/form/textarea';
+import Input from 'components/admin-page/common/form/input';
+import FormButton from 'components/admin-page/common/form/form-btn';
 
-import { client } from "utils/api-client";
-import { siteInfo } from "queries";
-import css from "./style.module.css";
+import { client } from 'utils/api-client';
+import { siteInfo } from 'queries';
+import css from './style.module.css';
 
 const getSchema = (lang) =>
   yup.object().shape({
@@ -27,7 +27,7 @@ const getSchema = (lang) =>
 
 const updateHomeInfo = async (data) => {
   const { id, ...params } = data;
-  const res = await client(`/home/${id}`, { data: params, method: "PATCH" });
+  const res = await client(`/home/${id}`, { data: params, method: 'PATCH' });
   return res;
 };
 
@@ -37,7 +37,6 @@ const GeneralInfoForm = (props) => {
   const { i18n } = useTranslation();
   const lang = i18n?.language;
 
-  console.log(lang);
   const { mutate, isLoading } = useMutation(updateHomeInfo, {
     onSuccess: () => {
       queryClient.invalidateQueries(siteInfo);
@@ -59,72 +58,71 @@ const GeneralInfoForm = (props) => {
   useEffect(() => {
     reset(props);
   }, [props, reset]);
-  console.log(errors);
 
   if (!lang) return null;
   return (
     <div>
-      <Form cls={css["form-custom-cls"]} onSubmit={handleSubmit(onSubmit)}>
-        <fieldset className={css["form-fieldset"]}>
-          <legend className={css["legend"]}>Hero</legend>
+      <Form cls={css['form-custom-cls']} onSubmit={handleSubmit(onSubmit)}>
+        <fieldset className={css['form-fieldset']}>
+          <legend className={css['legend']}>Hero</legend>
 
           <TextArea
             errors={errors.hero?.[lang]?.title?.message}
-            title={"Hero title"}
+            title={'Hero title'}
             isLoading={isLoading}
             formProps={register(`hero.${lang}.title`)}
-            id={"title"}
+            id={'title'}
           />
           <TextArea
             errors={errors.hero?.[lang]?.sub_title?.message}
-            title={"Hero Sub title"}
+            title={'Hero Sub title'}
             isLoading={isLoading}
             formProps={register(`hero.${lang}.sub_title`)}
           />
           <Input
             errors={errors.hero?.[lang]?.button?.message}
-            title={"Hero Btn Text"}
+            title={'Hero Btn Text'}
             isLoading={isLoading}
             formProps={register(`hero.${lang}.button`)}
           />
         </fieldset>
-        <fieldset className={css["form-fieldset"]}>
-          <legend className={css["legend"]}>Contacts</legend>
-          <div className={css["contacts-field-set"]}>
+        <fieldset className={css['form-fieldset']}>
+          <legend className={css['legend']}>Contacts</legend>
+          <div className={css['contacts-field-set']}>
             <Input
               errors={errors.contacts?.instagram?.message}
-              title={"instagram"}
+              title={'instagram'}
               isLoading={isLoading}
-              formProps={register("contacts.instagram")}
+              formProps={register('contacts.instagram')}
             />
             <Input
               errors={errors.contacts?.facebook?.message}
-              title={"facebook"}
+              title={'facebook'}
               isLoading={isLoading}
-              formProps={register("contacts.facebook")}
+              formProps={register('contacts.facebook')}
             />
             <Input
               errors={errors.contacts?.email?.message}
-              title={"email"}
+              title={'email'}
               isLoading={isLoading}
-              formProps={register("contacts.email")}
+              formProps={register('contacts.email')}
             />
             <Input
               errors={errors.contacts?.tel?.tel_number.message}
-              title={"Telephone"}
+              title={'Telephone'}
               isLoading={isLoading}
-              formProps={register("contacts.tel.tel_number")}
+              formProps={register('contacts.tel.tel_number')}
             />
             <Input
               errors={errors.contacts?.tel?.responsible.message}
-              title={"Contact Person"}
+              title={'Contact Person'}
               isLoading={isLoading}
-              formProps={register("contacts.tel.responsible")}
+              formProps={register('contacts.tel.responsible')}
             />
           </div>
         </fieldset>
 
-        <input className={"visually-hidden"} {...register("id")} />
+        <input className={'visually-hidden'} {...register('id')} />
         <div></div>
         <FormButton isLoading={isLoading} />
       </Form>

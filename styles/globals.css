@@ -2,40 +2,40 @@
 
 @font-face {
   font-family: LatoBl; /* Имя шрифта */
-  src: url("/public/fonts/LATO-BLACK.TTF") format("ttf");
+  src: url('/public/fonts/LATO-BLACK.TTF') format('ttf');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: LatoB; /* Имя шрифта */
-  src: url("/public/fonts/LATO-BOLD.TTF") format("ttf");
+  src: url('/public/fonts/LATO-BOLD.TTF') format('ttf');
   font-weight: 700;
   font-style: normal;
 }
 
 @font-face {
   font-family: LatoH; /* Имя шрифта */
-  src: url("/public/fonts/LATO-HEAVY.TTF") format("ttf");
+  src: url('/public/fonts/LATO-HEAVY.TTF') format('ttf');
 }
 
 @font-face {
   font-family: LatoL; /* Имя шрифта */
-  src: url("/public/fonts/LATO-LIGHT.TTF") format("ttf");
+  src: url('/public/fonts/LATO-LIGHT.TTF') format('ttf');
   font-weight: 300;
   font-style: normal;
 }
 
 @font-face {
   font-family: LatoM; /* Имя шрифта */
-  src: url("/public/fonts/LATO-MEDIUM.TTF") format("ttf");
+  src: url('/public/fonts/LATO-MEDIUM.TTF') format('ttf');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: LatoR; /* Имя шрифта */
-  src: url("/public/fonts/LATO-REGULAR.TTF") format("ttf");
+  src: url('/public/fonts/LATO-REGULAR.TTF') format('ttf');
   font-weight: 400;
   font-style: normal;
 }
@@ -50,7 +50,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: "Nunito", BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
+  font-family: 'Nunito', BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
     Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-size: 10px;
   line-height: 1.5;
@@ -119,7 +119,9 @@ a {
 html {
   scroll-behavior: smooth;
 }
-
+.ReactModal__Body--open {
+  overflow: hidden;
+}
 .ReactModal__Overlay {
   z-index: 12;
 }

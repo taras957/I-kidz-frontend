@@ -56,6 +56,7 @@
   font-size: 18px;
   font-weight: 700;
   text-align: center;
+  margin: 0;
 }
 .card-text {
   font-size: 14px;
@@ -64,7 +65,7 @@
   overflow: hidden;
   position: relative;
   text-overflow: ellipsis;
-  font-family: "Nunito";
+  font-family: 'Nunito';
   padding: 0 15px;
 }
 .expanded-description {
@@ -77,14 +78,14 @@
   margin-bottom: 15px;
 }
 .cname {
-  font-family: "Nunito";
+  font-family: 'Nunito';
   text-align: center;
   font-size: 16px;
   line-height: 2;
   text-transform: uppercase;
 }
 .cdesc {
-  font-family: "Nunito";
+  font-family: 'Nunito';
   text-align: center;
   font-size: 16px;
   line-height: 2;
@@ -108,7 +109,7 @@
   border-radius: 30px;
   padding: 5px 15px;
   font-size: 16px;
-  font-family: "Nunito";
+  font-family: 'Nunito';
   color: #fff;
   text-align: center;
   text-transform: uppercase;

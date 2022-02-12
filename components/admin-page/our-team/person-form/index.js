@@ -1,25 +1,25 @@
-import {useEffect} from 'react'
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { useTranslation } from "react-i18next";
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 
-import Form from "components/admin-page/common/form/form";
-import TextArea from "components/admin-page/common/form/textarea";
-import Input from "components/admin-page/common/form/input";
-import FormButton from "components/admin-page/common/form/form-btn";
+import Form from 'components/admin-page/common/form/form';
+import TextArea from 'components/admin-page/common/form/textarea';
+import Input from 'components/admin-page/common/form/input';
+import FormButton from 'components/admin-page/common/form/form-btn';
 
-import css from "./style.module.css";
+import css from './style.module.css';
 
 const defaultValues = (language) => ({
   translations: {
     [language]: {
-      title: "",
-      position: "",
-      description: "",
+      title: '',
+      position: '',
+      description: '',
     },
   },
-  image: null
+  image: null,
 });
 
 const getSchema = (lang) =>
@@ -31,11 +31,11 @@ const getSchema = (lang) =>
         description: yup.string().required(),
       }),
     }),
-    image: yup.mixed().required()
+    image: yup.mixed().required(),
   });
 
 const PersonForm = (props) => {
-    const {onSubmit,isLoading , values } = props
+  const { onSubmit, isLoading, values } = props;
   const { i18n } = useTranslation();
   const { language } = i18n;
   const {
@@ -45,21 +45,19 @@ const PersonForm = (props) => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues:  defaultValues(language),
+    defaultValues: defaultValues(language),
     resolver: yupResolver(getSchema(language)),
   });
 
-    useEffect(() => {
-        if(values){
-          console.log(values,language,'values')
-
-    reset(values);}
+  useEffect(() => {
+    if (values) {
+      reset(values);
+    }
   }, [values, reset]);
   const imgPath = `${process.env.NEXT_PUBLIC_API}/${values?.img_path}`;
 
-console.log(values,'errors')
   return (
-    <Form onSubmit={handleSubmit(onSubmit)} cls={css["form"]}>
+    <Form onSubmit={handleSubmit(onSubmit)} cls={css['form']}>
       <fieldset>
         <Input
           errors={errors?.translations?.[language]?.title?.message}
@@ -69,26 +67,26 @@ console.log(values,'errors')
         />
         <Input
           errors={errors?.translations?.[language]?.position?.message}
-          title={"Посада"}
+          title={'Посада'}
           isLoading={isLoading}
           formProps={register(`translations.${language}.position`)}
         />
         <TextArea
           errors={errors?.translations?.[language]?.description?.message}
-          title={"Опис"}
+          title={'Опис'}
           isLoading={isLoading}
           formProps={register(`translations.${language}.description`)}
-          id={"title"}
+          id={'title'}
         />
         <FormButton isLoading={isLoading} />
       </fieldset>
       <fieldset>
-      <img alt='person photo' src={imgPath} alt="person-photo" />
-      <input {...register('image')} type='file' />
-      <input {...register('_id')}  className={"visually-hidden"} />
+        <img alt="person photo" src={imgPath} alt="person-photo" />
+        <input {...register('image')} type="file" />
+        <input {...register('_id')} className={'visually-hidden'} />
       </fieldset>
     </Form>
   );
 };
 
-export default  PersonForm;
+export default PersonForm;

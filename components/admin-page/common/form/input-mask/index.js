@@ -1,15 +1,15 @@
-import React from "react";
-import InputMask from "react-input-mask";
-import { Controller } from "react-hook-form";
+import React from 'react';
+import InputMask from 'react-input-mask';
+import { Controller } from 'react-hook-form';
 
-import Spinner from "components/common/spinner";
+import Spinner from 'components/common/spinner';
 
-import css from "./style.module.css";
+import css from './style.module.css';
 
-const FormSelect = (props) => {
-  const { title, isLoading, value, control, mask, name } = props;
+const FormInputMask = (props) => {
+  const { title, isLoading, control, mask, name } = props;
   return (
-    <div className={css["form-control"]}>
+    <div className={css['form-control']}>
       <label htmlFor={title}>
         {title}
         <Spinner isLoading={isLoading} />
@@ -26,15 +26,17 @@ const FormSelect = (props) => {
           <>
             <InputMask
               mask={mask}
-              className={css["custom-input-mask"]}
+              className={css['custom-input-mask']}
               value={value}
               onChange={onChange}
-              required
+              id={title}
             >
-              <input inputRef={ref} type="phone" />
+              <input id={title} ref={ref} type="phone" />
             </InputMask>
 
-            <p className={"error"}>{JSON.stringify(error)}</p>
+            <p role="alert" className={'error'}>
+              {error?.message}
+            </p>
           </>
         )}
       />
@@ -42,4 +44,4 @@ const FormSelect = (props) => {
   );
 };
 
-export default FormSelect;
+export default FormInputMask;

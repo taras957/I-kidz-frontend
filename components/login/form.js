@@ -1,18 +1,18 @@
-import React from "react";
+import React from 'react';
 
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
-import Form from "components/admin-page/common/form/form";
-import Input from "components/admin-page/common/form/input";
-import FormButton from "components/admin-page/common/form/form-btn";
+import Form from 'components/admin-page/common/form/form';
+import Input from 'components/admin-page/common/form/input';
+import FormButton from 'components/admin-page/common/form/form-btn';
 
-import css from "./style.module.css";
+import css from './style.module.css';
 
 const defaultValues = () => ({
-  email: "",
-  password: "",
+  email: '',
+  password: '',
 });
 
 const getSchema = () =>
@@ -35,23 +35,22 @@ const LoginForm = (props) => {
   });
 
   const formButtonStates = {
-    save: "Login",
-    inprogress: "In Progress",
+    save: 'Login',
+    inprogress: 'In Progress',
   };
 
-  console.log(errors, " errors8888");
   return (
-    <Form cls={css["login-form"]} onSubmit={handleSubmit(onSubmit)}>
+    <Form cls={css['login-form']} onSubmit={handleSubmit(onSubmit)}>
       <Input
         type="email"
         errors={errors?.email?.message}
-        title={"Email"}
+        title={'Email'}
         isLoading={isLoading}
         formProps={register(`email`)}
       />
       <Input
         errors={errors?.password?.message}
-        title={"Password"}
+        title={'Password'}
         isLoading={isLoading}
         formProps={register(`password`)}
       />

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const PrevIcon = () => (
   <svg
@@ -11,7 +11,7 @@ const PrevIcon = () => (
     <path
       d="M24.024 46.5L1.54953 23.9745L24.075 1.5"
       stroke="#808080"
-      stroke-width="2"
+      strokeWidth="2"
     />
   </svg>
 );

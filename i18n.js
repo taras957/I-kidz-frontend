@@ -1,10 +1,10 @@
-import i18n from "i18next";
-import LanguageDetector from "i18next-browser-languagedetector";
-import { initReactI18next } from "react-i18next";
-import XHR from "i18next-xhr-backend";
-import languageUA from "./locate/ua/translate.json";
-import languageRUS from "./locate/rus/translate.json";
-import languageENG from "./locate/eng/translate.json";
+import i18n from 'i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
+import { initReactI18next } from 'react-i18next';
+import XHR from 'i18next-xhr-backend';
+import languageUA from './locate/ua/translate.json';
+import languageRUS from './locate/rus/translate.json';
+import languageENG from './locate/eng/translate.json';
 
 i18n
   .use(XHR)
@@ -17,23 +17,23 @@ i18n
       eng: languageENG,
     },
     /* default language when load the website in browser */
-    lng: "ua",
+    lng: 'ua',
     /* When react i18next not finding any language to as default in borwser */
-    fallbackLng: "rus",
+    fallbackLng: 'rus',
     /* debugger For Development environment */
-    debug: true,
-    ns: ["translations"],
-    defaultNS: "translations",
-    keySeparator: ".",
+    debug: false,
+    ns: ['translations'],
+    defaultNS: 'translations',
+    keySeparator: '.',
     interpolation: {
       escapeValue: false,
-      formatSeparator: ",",
+      formatSeparator: ',',
     },
     react: {
-      wait: true,
-      bindI18n: "languageChanged loaded",
-      bindStore: "added removed",
-      nsMode: "default",
+      bindI18n: 'languageChanged loaded',
+      bindStore: 'added removed',
+      nsMode: 'default',
+      useSuspense: false,
     },
   });
 

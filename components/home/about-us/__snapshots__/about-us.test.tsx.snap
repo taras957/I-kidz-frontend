@@ -1,0 +1,88 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing about us component  to be in document 1`] = `
+<section
+  class="root"
+  data-testid="about-us"
+>
+  <div
+    class="side-pic"
+  >
+    <span
+      style="box-sizing: border-box; display: inline-block; overflow: hidden; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative; max-width: 100%;"
+    >
+      <span
+        style="box-sizing: border-box; display: block; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; max-width: 100%;"
+      >
+        <img
+          alt=""
+          aria-hidden="true"
+          src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEzIiBoZWlnaHQ9IjQ4NCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="
+          style="display: block; max-width: 100%; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px;"
+        />
+      </span>
+      <img
+        alt="girl with laptop"
+        data-nimg="intrinsic"
+        decoding="async"
+        src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+        style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; padding: 0px; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"
+      />
+      <noscript />
+    </span>
+  </div>
+  <div
+    class="side-content"
+  >
+    <h2
+      class="title"
+    >
+      Про Нас
+    </h2>
+    <p
+      class="subtitle"
+    >
+      iKIDZ – це цифровий простір для розвитку технологічних навичок у дітей. В iKIDZ діти вивчають сучасні мови програмування, комп’ютерні технології, математику та англійську мову. Наша унікальна методика:
+    </p>
+    <ul
+      class="pros-list"
+    >
+      <li
+        class="pros-item"
+      >
+        Навчання через практику: діти навчаються цифровій грамотності, ІТ-розробці, кодингу, дизайну у команди професійних ІТ спеціалістів під патронажем ІТ компаній.
+      </li>
+      <li
+        class="pros-item"
+      >
+        Сучасні мови програмування: ми вчимо мови програмування та розвиваємо логіку та алгоритміку, що використовуються у 99% компаній у світі.
+      </li>
+      <li
+        class="pros-item"
+      >
+        Розвиток логіки та креативу: діти навчаються думати та створювати, а не завчати напам’ять мови програмування.
+      </li>
+      <li
+        class="pros-item"
+      >
+        Розвиток стартап мислення: діти створюють власні проекти та вчаться їх захищати. Беруть участь у різноманітних конкурсах, ІТ-хакатонах, олімпіадах та мітапах.
+      </li>
+      <li
+        class="pros-item"
+      >
+        Заходи для батьків: цікаві зустрічі, сучасні івенти, подорожі та постійний зв’язок.
+      </li>
+      <li
+        class="pros-item"
+      >
+        Ми разом йдемо до спільної мети і допомогаємо дитині реалізувати себе і стати успішною.
+      </li>
+    </ul>
+    <p
+      class="motto"
+    >
+      Наші діти не грають в комп’ютерні ігри, а створюють їх самі!
+    </p>
+  </div>
+</section>
+`;
