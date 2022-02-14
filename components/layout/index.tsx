@@ -1,8 +1,8 @@
-import React from "react";
-import css from "./style.module.css";
-import Header from "components/layout/header";
+import React, { FC } from 'react';
+import css from './style.module.css';
+import Header from 'components/layout/header';
 
-const Layout = ({ children }) => {
+const Layout: FC = ({ children }) => {
   return (
     <div className={css.root}>
       <Header />

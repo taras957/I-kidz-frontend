@@ -14,12 +14,9 @@ import ErrorBanner from '@/components/common/error-banner';
 const Hero = () => {
   const { hero, isLoading, isError } = useHomePage();
 
-<<<<<<< HEAD
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const textInfo = hero;
 
-=======
->>>>>>> a936b54 (fix hero)
   const [hiddenRef, setHiddenRef] = useState<HTMLButtonElement | null>(null);
   const [isFlying, setIsFlying] = useState(false);
 

@@ -1,13 +1,11 @@
 import React, { useRef } from 'react';
 import Slider from 'react-slick';
 import { NextArrow, PrevArrow } from 'components/common/slider-arrows';
-import { useTranslation } from 'react-i18next';
-import { projectBootstrapQuery } from 'queries/index';
-import { useQueryClient } from 'react-query';
 
 import { useResizeObserver } from 'hooks/useResizeObserver';
 import css from './style.module.css';
-import { IProjectBootstrap } from 'interfaces/home';
+import { useHomePage } from 'hooks/useHomePage';
+import ErrorBanner from '@/components/common/error-banner';
 
 const settings = {
   dots: true,
@@ -20,23 +18,16 @@ const settings = {
   prevArrow: <PrevArrow />,
 };
 
-const defaultPackage = {
-  title: 'Переклад відсутній',
-  position: 'Переклад відсутній',
-  description: 'Переклад відсутній',
-};
 const Team = () => {
   const ref = useRef(null);
 
-  const queryClient = useQueryClient();
+  const { members: teamMembers, isError } = useHomePage();
 
-  const projectInfo = queryClient?.getQueryData<IProjectBootstrap>(
-    projectBootstrapQuery
-  );
-  const { members: teamMembers } = projectInfo || { members: [] };
-  const { i18n } = useTranslation();
-  const lang: 'eng' | 'ua' = i18n.language as 'eng' | 'ua';
   const [width] = useResizeObserver(ref);
+
+  if (isError) {
+    return <ErrorBanner>Error While Loading. Please Reload page.</ErrorBanner>;
+  }
 
   return (
     <section ref={ref} className={css['root']}>
@@ -45,7 +36,6 @@ const Team = () => {
         <ul className={css['cards']}>
           {teamMembers?.map((person) => {
             const path = `${process.env.NEXT_PUBLIC_API}/${person.img_path}`;
-            const translated = person.translations[lang] || defaultPackage;
             return (
               <li key={person._id} className={css['card']}>
                 <div className={css['avatar-wrapper']}>
@@ -57,9 +47,9 @@ const Team = () => {
                     alt="photo"
                   />
                 </div>
-                <p className={css['name']}>{translated.title}</p>
-                <p className={css['position']}>{translated.position}</p>
-                <p className={css['workplace']}>{translated.description}</p>
+                <p className={css['name']}>{person.title}</p>
+                <p className={css['position']}>{person.position}</p>
+                <p className={css['workplace']}>{person.description}</p>
               </li>
             );
           })}
@@ -68,7 +58,6 @@ const Team = () => {
         <Slider {...settings}>
           {teamMembers?.map((person) => {
             const path = `${process.env.NEXT_PUBLIC_API}/${person?.img_path}`;
-            const translated = person.translations[lang] || defaultPackage;
             return (
               <div key={person._id}>
                 <div className={css['card']}>
@@ -81,10 +70,10 @@ const Team = () => {
                       alt="photo"
                     />
                   </div>
-                  <p className={css['name']}>{translated.title}</p>
-                  <p className={css['position']}>{translated.position}</p>
+                  <p className={css['name']}>{person.title}</p>
+                  <p className={css['position']}>{person.position}</p>
                   <blockquote className={css['workplace']}>
-                    {translated.description}
+                    {person.description}
                   </blockquote>
                 </div>
               </div>
