@@ -18,7 +18,6 @@ const FormInputMask = (props) => {
         control={control}
         defaultValue=""
         name={name}
-        rules={{ required: true }}
         render={({
           field: { onChange, value, ref },
           fieldState: { error },
@@ -33,10 +32,11 @@ const FormInputMask = (props) => {
             >
               <input id={title} ref={ref} type="phone" />
             </InputMask>
-
-            <p role="alert" className={'error'}>
-              {error?.message}
-            </p>
+            {error?.message && (
+              <p role="alert" className={'error'}>
+                {error?.message}
+              </p>
+            )}
           </>
         )}
       />

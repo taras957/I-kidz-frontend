@@ -1,17 +1,17 @@
-import React from "react";
-import { useUser } from "context/auth-provider";
-import LoginForm from "./form";
-import { useRouter } from "next/router";
+import React from 'react';
+import { useUser } from 'context/auth-provider';
+import LoginForm from './form';
+import { useRouter } from 'next/router';
 
 const Login = () => {
-  const { user, loginUser, isLoading, isFetched } = useUser();
+  const { user, loginUser, isFetched } = useUser();
   const router = useRouter();
 
   if (user && isFetched) {
-    router.push("/admin");
+    router.push('/admin');
   }
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: { email: string; password: string }) => {
     loginUser(data);
   };
   return <LoginForm onSubmit={onSubmit} isLoading={false} />;

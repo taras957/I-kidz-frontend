@@ -2,7 +2,8 @@ import React from 'react';
 import Modal from 'react-modal';
 import { useModal } from 'components/common/modal';
 
-Modal.setAppElement('#__next');
+if (process.env.NODE_ENV !== 'test') Modal.setAppElement('#__next');
+
 const customStyles = {
   content: {
     top: '50%',
