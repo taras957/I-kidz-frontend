@@ -1,8 +1,8 @@
-import { useState, useLayoutEffect } from "react";
-import css from "./style.module.css";
+import { useState, useLayoutEffect } from 'react';
+import css from './style.module.css';
 const WaveBackground = ({ children }) => {
   const [ref, setRef] = useState(null);
-  const [path, setPath] = useState(" ");
+  const [path, setPath] = useState(' ');
 
   function getClipPathString(w, h) {
     let width_px = w;
@@ -12,14 +12,14 @@ const WaveBackground = ({ children }) => {
     let frequency = 1.2;
     let units = (frequency * width_px) / 100;
 
-    let clipPathString = "polygon(100% 0%, 0% 0% ";
+    let clipPathString = 'polygon(100% 0%, 0% 0% ';
 
     for (let i = 0; i <= 100; i++) {
       let val = offset + amplitude * Math.cos(i / units);
       val = (Math.floor(val) / height_px) * 100;
       clipPathString += `, ${i}% ${val}% `;
     }
-    return (clipPathString += ");");
+    return (clipPathString += ');');
   }
   useLayoutEffect(() => {
     if (ref) {
@@ -30,7 +30,7 @@ const WaveBackground = ({ children }) => {
     }
   }, [ref]);
   return (
-    <div ref={(r) => setRef(r)} className={css["background"]}>
+    <div ref={(r) => setRef(r)} className={css['background']}>
       {children}
     </div>
   );

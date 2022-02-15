@@ -17,6 +17,7 @@ import { bootstrapApp } from '../pages';
 const flatten = {
   categories: [],
   courses: [],
+  contacts: {},
   hero: null,
   members: [],
   partners: [],

@@ -10,27 +10,35 @@ import FormButton from 'components/admin-page/common/form/form-btn';
 
 import css from './style.module.css';
 
-const defaultValues = () => ({
+const defaultValues = {
   email: '',
   password: '',
-});
+};
 
 const getSchema = () =>
   yup.object().shape({
-    email: yup.string().required().email(),
-    password: yup.string().required(),
+    email: yup.string().required().email('Incorrect email'),
+    password: yup
+      .string()
+      .min(6, 'min password should be 6 symbols')
+      .required(),
   });
 
-const LoginForm = (props) => {
+interface ILoginFormProps {
+  isLoading: boolean;
+  onSubmit(data: { email: string; password: string }): void;
+}
+
+const LoginForm = (props: ILoginFormProps) => {
   const { onSubmit, isLoading } = props;
 
   const {
     register,
-    reset,
+
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues: defaultValues(),
+    defaultValues,
     resolver: yupResolver(getSchema()),
   });
 
@@ -38,7 +46,6 @@ const LoginForm = (props) => {
     save: 'Login',
     inprogress: 'In Progress',
   };
-
   return (
     <Form cls={css['login-form']} onSubmit={handleSubmit(onSubmit)}>
       <Input
@@ -53,6 +60,7 @@ const LoginForm = (props) => {
         title={'Password'}
         isLoading={isLoading}
         formProps={register(`password`)}
+        type="password"
       />
 
       <FormButton states={formButtonStates} isLoading={isLoading} />

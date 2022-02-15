@@ -1,15 +1,14 @@
-import { PrevIcon, NextIcon } from "images/custom-icons";
+import { PrevIcon, NextIcon } from 'images/custom-icons';
 
 export function NextArrow(props) {
   const { className, style, onClick } = props;
   return (
     <div
       className={className}
-      style={{ ...style, display: "block", background: "transparent" }}
+      style={{ ...style, display: 'block', background: 'transparent' }}
       onClick={onClick}
     >
-      {" "}
-      <NextIcon />{" "}
+      <NextIcon />
     </div>
   );
 }
@@ -19,10 +18,10 @@ export function PrevArrow(props) {
   return (
     <div
       className={className}
-      style={{ display: "block", background: "transparent" }}
+      style={{ display: 'block', background: 'transparent' }}
       onClick={onClick}
     >
-      <PrevIcon />{" "}
+      <PrevIcon />{' '}
     </div>
   );
 }

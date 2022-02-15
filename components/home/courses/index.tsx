@@ -1,5 +1,4 @@
 import Card from 'components/home/courses/card';
-// import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Box from 'components/layout/box';
 import dynamic from 'next/dynamic';
 import { Tab, TabList, TabPanel, TabsProps } from 'react-tabs';

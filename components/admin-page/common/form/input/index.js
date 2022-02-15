@@ -11,9 +11,11 @@ const Input = (props) => {
         <Spinner isLoading={isLoading} />
       </label>
       <input key={title} type={type} id={title} {...formProps} />
-      <p role="alert" className={'error'}>
-        {errors}
-      </p>
+      {errors && (
+        <p role="alert" className={'error'}>
+          {errors}
+        </p>
+      )}
     </div>
   );
 };

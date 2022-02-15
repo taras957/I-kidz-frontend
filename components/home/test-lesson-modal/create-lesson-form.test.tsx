@@ -93,11 +93,12 @@ describe('testing form component', () => {
   });
 
   test('should show errors, when inputs are incorrect', async () => {
-    const { submitBtn } = await formSetUp();
-
-    userEvent.click(submitBtn);
-
+    render(<Form isLoading={false} onSubmit={mockPostFn} isSuccess={false} />);
+    act(() => {
+      userEvent.click(screen.queryByRole('button')!);
+    });
     expect(await screen.findAllByRole('alert')).toHaveLength(3);
+
     expect(mockPostFn).not.toBeCalled();
   });
 
