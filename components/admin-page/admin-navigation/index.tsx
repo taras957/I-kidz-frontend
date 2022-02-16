@@ -44,8 +44,7 @@ const AdminNavigation = () => {
                     [css['active']]: router.asPath.includes(node.href),
                   })}
                 >
-                  {' '}
-                  {node.name}{' '}
+                  {node.name}
                 </a>
               </Link>
             </li>
