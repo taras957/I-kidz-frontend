@@ -1,6 +1,7 @@
-import React from "react";
+import { IIcon } from 'images/icon-interface';
+import React from 'react';
 
-const PlusIcon = ({ cls, width = 18, height = 18 }) => (
+const PlusIcon = ({ cls, width = 18, height = 18 }: IIcon) => (
   <svg
     className={cls}
     width={width}

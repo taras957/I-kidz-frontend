@@ -1,11 +1,12 @@
 .admin-layout-grid {
   height: 100vh;
+  overflow: hidden;
   display: grid;
   grid-template-columns: 15vw 1fr;
   grid-template-rows: 50px 1fr;
   grid-template-areas:
-    "header header"
-    "side-bar content";
+    'header header'
+    'side-bar content';
 }
 .top-bar {
   grid-area: header;
@@ -24,6 +25,7 @@
 .content {
   grid-area: content;
   background-color: #ebecf4;
+  overflow: auto;
 }
 .language-select-wrapper {
   max-width: 50px;
