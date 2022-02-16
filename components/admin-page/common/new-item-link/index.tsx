@@ -1,10 +1,10 @@
-import React, { FC, ReactElement } from 'react';
+import React, { FC, ReactNode } from 'react';
 import { PlusIcon } from 'images/custom-icons';
 import css from './style.module.css';
 import Link from 'components/admin-page/common/link';
 
 interface IItemLinkProps {
-  children: ReactElement;
+  children: ReactNode;
   path: string;
 }
 

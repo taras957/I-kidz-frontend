@@ -1,10 +1,10 @@
-import React, { ReactElement } from 'react';
+import React, { ReactNode } from 'react';
 import cx from 'classnames';
 import css from './style.module.css';
 interface IButtonProps {
-  children: ReactElement;
+  children: ReactNode;
   cls?: string;
-  onClick(): void;
+  onClick?: () => void;
   color?: string;
 }
 
