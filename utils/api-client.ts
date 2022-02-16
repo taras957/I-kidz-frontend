@@ -12,8 +12,9 @@ interface IAxiosConfig {
 interface IClientOptions {
   data?: unknown;
   token?: string;
-  headers?: Object;
+  headers?: Record<string, unknown>;
   isBlob?: boolean;
+  method?: Method;
 }
 
 async function client<T>(

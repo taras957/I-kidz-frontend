@@ -6,7 +6,7 @@ import Link from 'next/link';
 interface IProps {
   children: ReactElement;
   path: string;
-  cls: string;
+  cls?: string;
 }
 const CustomLink = (props: IProps) => {
   const { children, path, cls } = props;

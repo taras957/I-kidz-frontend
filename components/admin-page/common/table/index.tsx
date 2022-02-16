@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from 'react';
 import { TableOptions, useTable } from 'react-table';
 import css from './style.module.css';
 
-function Table<T extends Record<string, unknown>>(
+function Table<T extends Record<keyof T, unknown>>(
   props: PropsWithChildren<TableOptions<T>>
 ) {
   const { data, columns } = props;
