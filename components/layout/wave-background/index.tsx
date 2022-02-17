@@ -5,12 +5,12 @@ const WaveBackground = ({ children }) => {
   const [path, setPath] = useState(' ');
 
   function getClipPathString(w, h) {
-    let width_px = w;
-    let height_px = h;
-    let offset = 100;
-    let amplitude = 30;
-    let frequency = 1.2;
-    let units = (frequency * width_px) / 100;
+    const width_px = w;
+    const height_px = h;
+    const offset = 100;
+    const amplitude = 30;
+    const frequency = 1.2;
+    const units = (frequency * width_px) / 100;
 
     let clipPathString = 'polygon(100% 0%, 0% 0% ';
 

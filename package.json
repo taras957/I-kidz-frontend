@@ -9,7 +9,16 @@
     "dev": "next dev",
     "build": "next build",
     "test": "jest --watch",
-    "start": "next start -p $PORT"
+    "start": "next start -p $PORT",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix ",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.js,!(*test).js,*.jsx,*.ts,*.tsx": [
+      "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+      "prettier --write"
+    ],
+    "*.{js,jsx,ts,tsx}": "eslint --cache --fix"
   },
   "dependencies": {
     "@hookform/resolvers": "^2.1.0",
@@ -67,8 +76,10 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-testing-library": "^5.0.1",
+    "husky": "^7.0.4",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.4.7",
+    "lint-staged": "^12.3.4",
     "nock": "^13.2.2",
     "react-test-renderer": "^17.0.2",
     "ts-jest": "^27.1.3",

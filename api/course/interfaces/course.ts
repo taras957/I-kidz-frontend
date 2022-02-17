@@ -9,15 +9,12 @@ export interface ICourseData {
   };
   _id: string;
 }
+export type translationsType = 'ua' | 'eng' | 'rus';
 export interface ICourse {
   category: string;
   isActive: boolean;
   path: string;
-  translations: {
-    eng: ICourseTranslation;
-    rus: ICourseTranslation;
-    ua: ICourseTranslation;
-  };
+  translations: { [key in translationsType]: ICourseTranslation };
   id: string;
 }
 export interface ICourseTranslation {
