@@ -1,7 +1,7 @@
-import React, { useState, FC, ReactElement, ReactNode } from 'react';
+import React, { useState, FC, ReactElement } from 'react';
 import Select, { components } from 'react-select';
 import { useTranslation } from 'react-i18next';
-import { UkraineIcon, EnglandIcon, RussianIcon } from 'images/custom-icons';
+import { UkraineIcon, EnglandIcon } from 'images/custom-icons';
 import css from './style.module.css';
 
 type OptionType = {
@@ -43,7 +43,7 @@ const customStyles = {
     zIndex: '1000',
   }),
 };
-const formatOptionLabel = ({ icon, label = 'test' }, { context }) => {
+const formatOptionLabel = ({ icon }, { context }) => {
   const SelectedIcon = icon;
   if (context === 'value') {
     return (
