@@ -1,29 +1,29 @@
-import React, { useEffect } from "react";
-import { useRouter } from "next/router";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { useTranslation } from "react-i18next";
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 
-import { getCategories } from "hooks/useHomePageInfo";
-import { singleCourse, courseCategories } from "queries";
+import { getCategories } from 'hooks/useHomePageInfo';
+import { singleCourse, courseCategories } from 'queries';
 
-import { useMutation, useQueryClient, useQuery } from "react-query";
-import { client } from "utils/api-client";
-import {useUser} from 'context/auth-provider'
+import { useMutation, useQueryClient, useQuery } from 'react-query';
+import { client } from 'utils/api-client';
+import { useUser } from 'context/auth-provider';
 const getCourse = async (pid) => {
   const res = await client(`course/${pid}`);
 
   return res.data[0];
 };
 
-import Form from "components/admin-page/common/form/form";
-import TextArea from "components/admin-page/common/form/textarea";
-import Input from "components/admin-page/common/form/input";
-import FormButton from "components/admin-page/common/form/form-btn";
-import FormSelect from "components/admin-page/common/form/select";
+import Form from 'components/admin-page/common/form/form';
+import TextArea from 'components/admin-page/common/form/textarea';
+import Input from 'components/admin-page/common/form/input';
+import FormButton from 'components/admin-page/common/form/form-btn';
+import FormSelect from 'components/admin-page/common/form/select';
 
-import css from "./style.module.css";
+import css from './style.module.css';
 
 const getSchema = (lang) =>
   yup.object().shape({
@@ -40,12 +40,12 @@ const getSchema = (lang) =>
   });
 
 const defaultValues = {
-  title: "",
-  subtitle: "",
-  price: "",
-  duration: "",
-  description: "",
-  category: "",
+  title: '',
+  subtitle: '',
+  price: '',
+  duration: '',
+  description: '',
+  category: '',
 };
 
 const EditCourseForm = () => {
@@ -53,8 +53,8 @@ const EditCourseForm = () => {
   const { pid } = router.query;
 
   const { data: categories } = useQuery(courseCategories, getCategories);
-const user =  useUser()
-const {token}=user
+  const user = useUser();
+  const { token } = user;
   const { i18n } = useTranslation();
   const { language } = i18n;
 
@@ -72,27 +72,23 @@ const {token}=user
     _id,
     image = null,
     category,
-    path,
-    is_active,
-    updatedAt,
     translations,
     allData,
-    ...data
   }) => {
     const fd = new FormData();
 
-    fd.append("category", category);
-    fd.append("translations", JSON.stringify({ ...allData, ...translations }));
+    fd.append('category', category);
+    fd.append('translations', JSON.stringify({ ...allData, ...translations }));
 
     if (image?.current.files.length) {
-      fd.append("image", image.current.files[0], image.current.files[0].name);
+      fd.append('image', image.current.files[0], image.current.files[0].name);
     }
     const res = await client(`/course/${_id}`, {
       data: fd,
-      method: "PATCH",
-      headers: { "Content-Type": "multipart/form-data" },
+      method: 'PATCH',
+      headers: { 'Content-Type': 'multipart/form-data' },
       isBlob: true,
-      token
+      token,
     });
 
     return res.data[0];
@@ -131,18 +127,18 @@ const {token}=user
   return (
     <Form
       key={language}
-      cls={css["course-style"]}
+      cls={css['course-style']}
       onSubmit={handleSubmit(onSubmit)}
     >
       <Input
         errors={errors?.translations?.[language]?.title?.message}
-        title={"Назва Курсу"}
+        title={'Назва Курсу'}
         isLoading={isLoading}
         formProps={register(`translations.${language}.title`)}
       />
       <Input
         errors={errors?.translations?.[language]?.subtitle?.message}
-        title={"Підзаголовок"}
+        title={'Підзаголовок'}
         isLoading={isLoading}
         formProps={register(`translations.${language}.subtitle`)}
       />
@@ -151,38 +147,38 @@ const {token}=user
         options={courseCategoriesOptions}
         isLoading={isLoading}
         errors={errors.category?.message}
-        title={"Вікова Група"}
+        title={'Вікова Група'}
         control={control}
-        name={"category"}
+        name={'category'}
       />
 
       <Input
         errors={errors?.translations?.[language]?.price?.message}
-        title={"Ціна"}
+        title={'Ціна'}
         isLoading={isLoading}
         formProps={register(`translations.${language}.price`)}
       />
       <Input
         errors={errors?.translations?.[language]?.duration?.message}
-        title={"Тривалість"}
+        title={'Тривалість'}
         isLoading={isLoading}
         formProps={register(`translations.${language}.duration`)}
       />
       <TextArea
         errors={errors?.translations?.[language]?.description?.message}
-        title={"Опис"}
+        title={'Опис'}
         isLoading={isLoading}
         formProps={register(`translations.${language}.description`)}
-        id={"title"}
+        id={'title'}
       />
       <input ref={fileInput} type="file" name="image" />
       <input
         value={true}
-        {...register("is_active")}
-        className={"visually-hidden"}
+        {...register('is_active')}
+        className={'visually-hidden'}
       />
-      <input value={true} {...register("_id")} className={"visually-hidden"} />
-      <img className={css["course-image"]} alt="course picture" src={path} />
+      <input value={true} {...register('_id')} className={'visually-hidden'} />
+      <img className={css['course-image']} alt="course picture" src={path} />
       <FormButton isLoading={isLoading} />
     </Form>
   );

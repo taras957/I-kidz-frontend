@@ -2,7 +2,7 @@ import { useState, useLayoutEffect } from 'react';
 import css from './style.module.css';
 const WaveBackground = ({ children }) => {
   const [ref, setRef] = useState(null);
-  const [path, setPath] = useState(' ');
+  const [, setPath] = useState(' ');
 
   function getClipPathString(w, h) {
     const width_px = w;

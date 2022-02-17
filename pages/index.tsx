@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { projectBootstrapQuery } from 'queries/index';
-import { QueryClient, useQuery } from 'react-query';
+import { QueryClient } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
 
 import Header from 'components/layout/header';

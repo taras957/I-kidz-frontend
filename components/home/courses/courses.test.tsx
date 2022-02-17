@@ -1,9 +1,8 @@
-import { act, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import Courses from 'components/home/courses';
 import { render } from '__tests__/utils/index';
 import * as homeData from 'hooks/useHomePage';
 import userEvent from '@testing-library/user-event';
-import { wait } from '@testing-library/user-event/dist/utils';
 import '__tests__/utils/media';
 const mockData = {
   courses: [
@@ -43,7 +42,7 @@ afterAll(() => {
 });
 describe('test for course section', () => {
   test('main elements presented in the document', async () => {
-    const { debug } = render(<Courses />);
+    render(<Courses />);
     expect(await screen.findByTestId('courses')).toBeInTheDocument();
     // debug();
 
