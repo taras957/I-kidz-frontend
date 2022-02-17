@@ -1,8 +1,14 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { IHomeInfo } from 'interfaces/home';
 import { siteInfo } from 'queries';
 import { useQuery } from 'react-query';
 import { client } from 'utils/api-client';
 import { Course } from '..';
+import {
+  ICourseData,
+  ICourseTranslation,
+  translationsType,
+} from '../interfaces/course';
 
 // GET
 export const getAdminInfo = async () => {
@@ -16,7 +22,28 @@ export const useCourseInfo = () => {
 
   return { data: normalized };
 };
+// POST
+export interface ICreateCourse {
+  picture: File;
+  translations: { [key in translationsType]?: ICourseTranslation };
+  category: string;
+}
+export const createCourse = async (data: ICreateCourse) => {
+  const { picture, translations, category } = data;
+  const fd = new FormData();
 
+  fd.append('category', category);
+  fd.append('translations', JSON.stringify(translations));
+
+  fd.append('image', picture, picture.name);
+
+  await client<ICourseData>(`/course/create`, {
+    data: fd,
+    method: 'POST',
+    headers: { 'Content-Type': 'multipart/form-data' },
+    isBlob: true,
+  });
+};
 // UPDATE
 interface IUpdateParams {
   id: string | number;
