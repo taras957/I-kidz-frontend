@@ -89,6 +89,7 @@ const CoursesList = (props: ICourseListProps) => {
       },
       {
         Header: 'Видалити',
+        // we don`t care about  right accessor here as we pass id directly
         accessor: 'description' as keyof CourseItem,
         Cell: ({ row }: CellProps<CourseItem>) => {
           return (
@@ -107,7 +108,7 @@ const CoursesList = (props: ICourseListProps) => {
     []
   );
 
-  return <Table<CourseItem> data={courses || []} columns={columns} />;
+  return <Table<CourseItem> data={courses} columns={columns} />;
 };
 
 export default CoursesList;

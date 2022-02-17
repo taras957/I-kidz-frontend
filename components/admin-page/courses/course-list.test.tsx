@@ -1,6 +1,14 @@
-import { render, screen } from '__tests__/utils';
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { render, screen, waitFor } from '__tests__/utils';
 import CoursesList from 'components/admin-page/courses';
+import userEvent from '@testing-library/user-event';
 
+import { deleteCourse, updateCourse } from 'api/course/data';
+
+jest.mock('api/course/data');
+afterAll(() => {
+  jest.restoreAllMocks();
+});
 const mockData = [
   {
     category: 'junior',
@@ -14,8 +22,45 @@ const mockData = [
     id: '123',
   },
 ];
-test('should render table with data', () => {
+
+beforeEach(() => {
   render(<CoursesList courses={mockData} />);
-  expect(screen.queryByRole('table')).toBeInTheDocument();
 });
-test.todo('should display delete & edit buttons');
+test('should render table with data', () => {
+  expect(screen.queryByRole('table')).toBeInTheDocument();
+  expect(screen.queryAllByRole('row')).toHaveLength(2);
+});
+
+test('edit link should have correct href', () => {
+  const editLink = screen.queryByRole('link')!;
+  expect(editLink).toHaveAttribute(
+    'href',
+    `/courses/edit-course/${mockData[0].id}`
+  );
+});
+
+test('delete btn should should be called with right params', () => {
+  const deleteBtn = screen.queryByText(/delete/i)!;
+  userEvent.click(deleteBtn);
+
+  waitFor(() => {
+    expect(deleteCourse).toHaveBeenCalled();
+    expect(deleteCourse).toHaveBeenCalledTimes(1);
+    expect(deleteCourse).toHaveBeenCalledWith(mockData[0].id);
+  });
+});
+
+test('toggle btn should should be called with right params', () => {
+  const toggle = screen.queryByRole('checkbox')!;
+
+  userEvent.click(toggle);
+
+  waitFor(() => {
+    expect(updateCourse).toHaveBeenCalled();
+    expect(updateCourse).toHaveBeenCalledTimes(1);
+    expect(updateCourse).toHaveBeenCalledWith({
+      id: mockData[0].id,
+      is_active: !mockData[0].isActive,
+    });
+  });
+});
