@@ -24,7 +24,7 @@ export const useCourseInfo = () => {
 };
 // POST
 export interface ICreateCourse {
-  picture: File;
+  picture: File | null;
   translations: { [key in translationsType]?: ICourseTranslation };
   category: string;
 }
@@ -34,8 +34,9 @@ export const createCourse = async (data: ICreateCourse) => {
 
   fd.append('category', category);
   fd.append('translations', JSON.stringify(translations));
-
-  fd.append('image', picture, picture.name);
+  if (picture) {
+    fd.append('image', picture, picture.name);
+  }
 
   await client<ICourseData>(`/course/create`, {
     data: fd,

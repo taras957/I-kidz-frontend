@@ -6,6 +6,7 @@ import userEvent from '@testing-library/user-event';
 import { deleteCourse, updateCourse } from 'api/course/data';
 
 jest.mock('api/course/data');
+
 afterAll(() => {
   jest.restoreAllMocks();
 });

@@ -1,0 +1,12 @@
+.form-control {
+  margin-bottom: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.form-control label {
+  color: #777;
+  display: block;
+  font-size: 1.6rem;
+}

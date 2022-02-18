@@ -98,6 +98,7 @@ a {
   color: var(--error-color);
   font-size: 1.8rem;
   font-weight: 500;
+  margin: 0;
 }
 .visually-hidden {
   position: absolute;

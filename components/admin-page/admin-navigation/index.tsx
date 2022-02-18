@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import cx from 'classnames';
 import css from './style.module.css';
+
 const config = [
   {
     name: 'Basic Info',

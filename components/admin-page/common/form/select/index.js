@@ -32,7 +32,7 @@ const FormSelect = (props) => {
               onChange={(val) => onChange(val.value)}
               required
             />
-            <p className={'error'}>{JSON.stringify(error)}</p>
+            {error?.message ? <p className={'error'}>{error.message}</p> : null}
           </>
         )}
       />

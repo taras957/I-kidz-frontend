@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -20,42 +20,57 @@ import css from './style.module.css';
 import { createCourse, ICreateCourse } from 'api/course/data';
 import { useCategoryTranslation } from 'api/course-category/data-mappers/use-category-translation';
 import { translationsType } from 'api/course/interfaces/course';
+import ImageUploader from '../../common/form/image-uploader';
+import { useToaster } from '../../common/toaster';
 
 const getSchema = (lang: translationsType) =>
   yup.object().shape({
     translations: yup.object().shape({
       [lang]: yup.object().shape({
-        title: yup.string().required().min(5).max(40),
-        subtitle: yup.string().required(),
-        price: yup.string().required(),
-        duration: yup.string().required(),
-        description: yup.string().required(),
+        title: yup
+          .string()
+          .required(`це поле є обов'язковим`)
+          .min(5, 'мінімум 5 символів')
+          .max(40, 'максимум 40 символів'),
+        subtitle: yup
+          .string()
+          .min(5, 'мінімум 5 символів')
+          .required("це поле є обов'язковим"),
+        price: yup
+          .string()
+          .min(3, 'мінімум 3 символи')
+          .required("це поле є обов'язковим"),
+        duration: yup
+          .string()
+          .min(5, 'мінімум 5 символів')
+          .required("це поле є обов'язковим"),
+        description: yup
+          .string()
+          .min(5, 'мінімум 5 символів')
+          .required("це поле є обов'язковим"),
       }),
     }),
-    category: yup.string().required(),
+    category: yup.string().required("це поле є обов'язковим"),
     picture: yup
       .mixed()
       .required('You need to provide a file')
       .test('fileSize', 'File Size is too large', (value) => {
-        return value[0].size <= 5242880;
-      })
-      .test(
-        'fileType',
-        'Unsupported File Format',
-        (value) =>
-          !['image/jpeg', 'image/png', 'image/jpg'].includes(value.type)
-      ),
+        if (value) {
+          return value.size <= 5242880;
+        }
+        return false;
+      }),
   });
 
 const getDefaultValues = (lang: translationsType) => {
   return {
     translations: {
       [lang]: {
-        title: ' ',
-        subtitle: ' ',
-        price: ' ',
-        duration: ' ',
-        description: ' ',
+        title: '',
+        subtitle: '',
+        price: '',
+        duration: '',
+        description: '',
       },
     },
     age: '',
@@ -64,17 +79,16 @@ const getDefaultValues = (lang: translationsType) => {
     is_active: true,
   };
 };
+type TDefaultValues = typeof getDefaultValues;
 
 const CourseForm = () => {
   const queryClient = useQueryClient();
-  const fileInput = React.useRef<HTMLInputElement>(null);
   const courseCategoriesOptions = useCategoryTranslation();
-
   const { i18n } = useTranslation();
-
+  const { burnSuccessToast } = useToaster();
   const language = i18n.language as translationsType;
 
-  const { mutate, isLoading } = useMutation(createCourse, {
+  const { mutate, isLoading, isSuccess } = useMutation(createCourse, {
     onSuccess: () => {
       queryClient.invalidateQueries(siteInfo);
     },
@@ -84,19 +98,23 @@ const CourseForm = () => {
     register,
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: getDefaultValues(language),
     resolver: yupResolver(getSchema(language)),
   });
 
-  type IOnSubmit = Omit<ICreateCourse, 'picture'>;
-  const onSubmit = (_data: IOnSubmit) => {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const payload = { ..._data, picture: fileInput.current?.files?.[0]! };
-
-    mutate(payload);
+  const onSubmit = (_data: ICreateCourse) => {
+    mutate(_data);
   };
+  useEffect(() => {
+    if (isSuccess) {
+      reset(getDefaultValues(language));
+      burnSuccessToast('Курс добавлено!');
+    }
+  }, [isSuccess]);
+
   return (
     <Form cls={css['course-style']} onSubmit={handleSubmit(onSubmit)}>
       <Input
@@ -141,7 +159,13 @@ const CourseForm = () => {
         formProps={register(`translations.${language}.description`)}
         id={'title'}
       />
-      <input ref={fileInput} type="file" name="picture" />
+      {/* !TODO  */}
+      <ImageUploader<TDefaultValues>
+        isLoading={isLoading}
+        control={control}
+        title="Логотип Курсу"
+        name="picture"
+      />
       <input
         type="checkbox"
         checked={true}
