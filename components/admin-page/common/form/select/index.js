@@ -10,7 +10,7 @@ const FormSelect = (props) => {
   const { title, isLoading, options, control, name } = props;
   return (
     <div className={css['form-control']}>
-      <label htmlFor={title}>
+      <label htmlFor={name}>
         {title}
         <Spinner isLoading={isLoading} />
       </label>
@@ -25,6 +25,7 @@ const FormSelect = (props) => {
         }) => (
           <>
             <Select
+              inputId={name}
               className={css['custom-select']}
               options={options}
               inputRef={ref}
