@@ -10,7 +10,7 @@ const queryConfig = {
   queries: {
     useErrorBoundary: true,
     refetchOnMount: false,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
 
     retry(failureCount, error) {
       if (error.status === 404) return false;

@@ -16,6 +16,7 @@ describe('testing login form', () => {
 
     expect(submitFn).not.toHaveBeenCalled();
   });
+
   test('Test validation associated with email inputs.', async () => {
     render(<LoginForm onSubmit={submitFn} isLoading={false} />);
 

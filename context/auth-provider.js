@@ -1,12 +1,13 @@
-import React from "react";
-import { client } from "utils/api-client";
+import React from 'react';
+import { client } from 'utils/api-client';
 const AuthContext = React.createContext();
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { useRouter } from "next/router";
-import { userQuery } from "queries";
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useRouter } from 'next/router';
+import { userQuery } from 'queries';
 
-const localStorageKey = "token";
-
+const localStorageKey = 'token';
+const tenMinutes = 10 * 60 * 1000;
+console.log(tenMinutes, 'tenMinutes');
 async function getToken() {
   return window.localStorage.getItem(localStorageKey);
 }
@@ -20,47 +21,42 @@ async function getUser() {
 
   const token = await getToken();
   if (token) {
-    const { data } = await client("/get-user", { token });
+    const { data } = await client('/get-user', { token });
 
     user = data?.user;
     userToken = data?.token;
   }
-  return {user, token:userToken};
+  return { user, token: userToken };
 }
 
 async function login(userCredentials) {
-  let user = null;
+  // let user = null;
 
-  const { data } = await client("/login", {
+  const { data } = await client('/login', {
     data: userCredentials,
-
   });
   const { token } = data;
 
   await setToken(token);
 
-  user = data;
+  // user = data;
   return data.user;
 }
 export const AuthProvider = ({ children }) => {
-  const { data, isLoading, isFetched } = useQuery(
-    userQuery,
-    getUser,
-    {
-      // cacheTime: tenMinutes,
-      // staleTime: tenMinutes / 3,
-      // refetchOnWindowFocus: false,
-    }
-  );
+  const { data, isLoading, isFetched } = useQuery(userQuery, getUser, {
+    cacheTime: tenMinutes,
+    staleTime: tenMinutes / 3,
+    refetchOnWindowFocus: false,
+    retry: false,
+  });
   const router = useRouter();
 
   const queryClient = useQueryClient();
 
-
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
   if (router.isFallback) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
   const { mutate: loginUser } = useMutation(login, {
@@ -69,23 +65,31 @@ export const AuthProvider = ({ children }) => {
     },
   });
 
-  const logOut = async() => {
-    await setToken(null)
-    await  moveHome()
-  }
+  const logOut = async () => {
+    await setToken(null);
+    await moveHome();
+  };
 
-  const moveHome = async () =>     router.push("/");
+  const moveHome = async () => router.push('/');
 
   const value = React.useMemo(
-    () => ({ user: data?.user,token:data?.token, loginUser, logOut,moveHome, isLoading, isFetched }),
+    () => ({
+      user: data?.user,
+      token: data?.token,
+      loginUser,
+      logOut,
+      moveHome,
+      isLoading,
+      isFetched,
+    }),
     [data, isLoading]
   );
 
   if (isLoading) {
     return <div>Loading</div>;
   }
-  if (!data?.user && isFetched && router.pathname !== "/login") {
-    router.push("/login");
+  if (!data?.user && isFetched && router.pathname !== '/login') {
+    router.push('/login');
     return <div>Loading</div>;
   }
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
