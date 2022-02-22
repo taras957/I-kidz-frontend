@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import SpinnerLarge from '../components/common/spinner-large';
 import Providers from 'context';
-import Toaster from '@/components/admin-page/common/toaster';
+import Toaster from '@/components/common/toaster';
 
 function MyApp({ Component, pageProps }) {
   return (

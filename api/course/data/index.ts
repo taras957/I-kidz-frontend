@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { IHomeInfo } from 'interfaces/home';
-import { siteInfo } from 'queries';
+import { useRouter } from 'next/router';
+import { singleCourse, siteInfo } from 'queries';
 import { useQuery } from 'react-query';
 import { client } from 'utils/api-client';
 import { Course } from '..';
@@ -22,6 +23,23 @@ export const useCourseInfo = () => {
 
   return { data: normalized };
 };
+//   GET SINGLE COURSE
+const getCourse = async (pid: string) => {
+  if (pid) {
+    const res = await client<ICourseData[]>(`course/${pid}`);
+    return new Course(res.data[0]);
+  }
+};
+
+export function useSingleCourse() {
+  const router = useRouter();
+  const pid = router.query.pid as string;
+
+  return useQuery(singleCourse, async () => {
+    return getCourse(pid);
+  });
+}
+
 // POST
 export interface ICreateCourse {
   picture: File | null;
@@ -54,6 +72,39 @@ interface IUpdateParams {
 export const updateCourse = async ({ id, ...data }: IUpdateParams) => {
   await client(`/course/${id}`, { data, method: 'PATCH' });
 };
+
+//  UPDATE FULL COURSE INFO
+export interface IUpdateCourse {
+  id: string;
+  image?: File;
+  category: string;
+  translations: { [key in translationsType]?: ICourseTranslation };
+  token: string;
+}
+export const updateCourseInfo = async ({
+  id,
+  image,
+  category,
+  translations,
+  token,
+}: IUpdateCourse) => {
+  const fd = new FormData();
+
+  fd.append('category', category);
+  fd.append('translations', JSON.stringify({ ...translations }));
+
+  if (!!image) {
+    fd.append('image', image, image.name);
+  }
+  await client(`/course/${id}`, {
+    data: fd,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'multipart/form-data' },
+    isBlob: true,
+    token,
+  });
+};
+
 // DELETE
 export const deleteCourse = async (id: string | number) => {
   await client(`/course/${id}`, { method: 'DELETE' });

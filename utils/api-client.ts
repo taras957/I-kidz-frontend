@@ -1,4 +1,5 @@
 import axios, { Method } from 'axios';
+
 const apiURL = process.env.NEXT_PUBLIC_API;
 const apiPrefix = process.env.NEXT_PUBLIC_API_PREFIX;
 
@@ -16,7 +17,21 @@ interface IClientOptions {
   isBlob?: boolean;
   method?: Method;
 }
+export const handleErrorResponse = (error) => {
+  let errorResponse;
+  if (error.response && error.response.data) {
+    // I expect the API to handle error responses in valid format
+    errorResponse = error.response.data.error;
 
+    // JSON stringify if you need the json and use it later
+  } else if (error.request) {
+    // TO Handle the default error response for Network failure or 404 etc.,
+    errorResponse = error.request.message || error.request.statusText;
+  } else {
+    errorResponse = error.message;
+  }
+  return errorResponse;
+};
 async function client<T>(
   endpoint: string,
   {
@@ -42,25 +57,26 @@ async function client<T>(
   if (token) {
     Object.assign(config.headers, { Authorization: `Bearer ${token}` });
   }
-  return axios
-    .request<T>(config)
-    .then((response) => {
-      // if (response.status === 401) {
-      //   queryCache.clear()
-      //   await auth.logout()
-      //   // refresh the page for them
-      //   window.location.assign(window.location)
-      //   return Promise.reject({message: 'Please re-authenticate.'})
-      // }
-      return response;
-    })
-    .catch((e: unknown) => {
-      throw new Error(e.message);
-      // if (typeof e === 'string') {
-      //   e.toUpperCase();
-      // } else if (e instanceof Error) {
-      //   e.message;
-      // }
-    });
+  return axios.request<T>(config);
+  // .catch((e: unknown) => {
+  // return handleErrorResponse(e);
+  // console.log(e.toJSON(), 'error api');
+  // throw new Error(e.message);
+  // if (typeof e === 'string') {
+  //   e.toUpperCase();
+  // } else if (e instanceof Error) {
+  //   e.message;
+  // }
+  // });
+  // .then((response) => {
+  //   // if (response.status === 401) {
+  //   //   queryCache.clear();
+  //   //   await logOut();
+  //   //   // refresh the page for them
+  //   //   window.location.assign(window.location);
+  //   //   return Promise.reject({ message: 'Please re-authenticate.' });
+  //   // }
+  //   return response;
+  // })
 }
 export { client };

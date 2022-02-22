@@ -1,9 +1,11 @@
 import React from 'react';
-import { client } from 'utils/api-client';
+import { client, handleErrorResponse } from 'utils/api-client';
 const AuthContext = React.createContext();
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import { userQuery } from 'queries';
+import { toast } from 'react-toastify';
+import { globalToastSettings } from '@/components/common/toaster';
 
 const localStorageKey = 'token';
 const tenMinutes = 10 * 60 * 1000;
@@ -21,6 +23,7 @@ async function getUser() {
 
   const token = await getToken();
   if (token) {
+    console.log(typeof token, 'token');
     const { data } = await client('/get-user', { token });
 
     user = data?.user;
@@ -44,6 +47,11 @@ async function login(userCredentials) {
 }
 export const AuthProvider = ({ children }) => {
   const { data, isLoading, isFetched } = useQuery(userQuery, getUser, {
+    onError: (error) => {
+      // An error happened!
+      const errorMessage = handleErrorResponse(error);
+      toast.error(`Something went wrong: ${errorMessage}`, globalToastSettings);
+    },
     cacheTime: tenMinutes,
     staleTime: tenMinutes / 3,
     refetchOnWindowFocus: false,
@@ -63,10 +71,15 @@ export const AuthProvider = ({ children }) => {
     onSuccess: () => {
       queryClient.invalidateQueries(userQuery);
     },
+    onError: (error) => {
+      // An error happened!
+      const errorMessage = handleErrorResponse(error);
+      toast.error(`Something went wrong: ${errorMessage}`, globalToastSettings);
+    },
   });
 
   const logOut = async () => {
-    await setToken(null);
+    await setToken('');
     await moveHome();
   };
 

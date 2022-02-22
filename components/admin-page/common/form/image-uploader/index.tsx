@@ -12,20 +12,25 @@ import defaultLogo from 'images/default-images/dafault-logo.png';
 interface IImageInputProps {
   title: string;
   isLoading: boolean;
+  path?: string;
 }
 export type IImageUploaderPros<T extends FieldValues> = IImageInputProps &
   ControllerProps<T>;
 
 function ImageUploader<T extends FieldValues>(props: IImageUploaderPros<T>) {
-  const { title, isLoading, control, name } = props;
+  const { title, isLoading, control, name, path = null } = props;
   const watchPicture = useWatch({ control, name });
 
   const imgSrc = React.useMemo(() => {
+    // for displaying incoming image
+    if (path && !watchPicture) {
+      return path;
+    }
     if (!watchPicture) {
       return defaultLogo.src;
     }
     return URL.createObjectURL(watchPicture);
-  }, [watchPicture]);
+  }, [watchPicture, path]);
   return (
     <FormControl>
       <label htmlFor={title}>
