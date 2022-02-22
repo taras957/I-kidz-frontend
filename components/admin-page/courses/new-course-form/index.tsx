@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 
 import { useMutation, useQueryClient } from 'react-query';
@@ -20,61 +19,21 @@ import css from './style.module.css';
 import { createCourse, ICreateCourse } from 'api/course/data';
 import { useCategoryTranslation } from 'api/course-category/data-mappers/use-category-translation';
 import { translationsType } from 'api/course/interfaces/course';
+import ImageUploader from '@/components/admin-page/common/form/image-uploader';
+import { useToaster } from '@/components/common/toaster';
 
-const getSchema = (lang: translationsType) =>
-  yup.object().shape({
-    translations: yup.object().shape({
-      [lang]: yup.object().shape({
-        title: yup.string().required().min(5).max(40),
-        subtitle: yup.string().required(),
-        price: yup.string().required(),
-        duration: yup.string().required(),
-        description: yup.string().required(),
-      }),
-    }),
-    category: yup.string().required(),
-    picture: yup
-      .mixed()
-      .required('You need to provide a file')
-      .test('fileSize', 'File Size is too large', (value) => {
-        return value[0].size <= 5242880;
-      })
-      .test(
-        'fileType',
-        'Unsupported File Format',
-        (value) =>
-          !['image/jpeg', 'image/png', 'image/jpg'].includes(value.type)
-      ),
-  });
+import { getDefaultValues, getSchema } from '../utils';
 
-const getDefaultValues = (lang: translationsType) => {
-  return {
-    translations: {
-      [lang]: {
-        title: ' ',
-        subtitle: ' ',
-        price: ' ',
-        duration: ' ',
-        description: ' ',
-      },
-    },
-    age: '',
-    category: '',
-    picture: null,
-    is_active: true,
-  };
-};
+type TDefaultValues = ReturnType<typeof getDefaultValues>;
 
 const CourseForm = () => {
   const queryClient = useQueryClient();
-  const fileInput = React.useRef<HTMLInputElement>(null);
   const courseCategoriesOptions = useCategoryTranslation();
-
   const { i18n } = useTranslation();
-
+  const { burnSuccessToast } = useToaster();
   const language = i18n.language as translationsType;
 
-  const { mutate, isLoading } = useMutation(createCourse, {
+  const { mutate, isLoading, isSuccess } = useMutation(createCourse, {
     onSuccess: () => {
       queryClient.invalidateQueries(siteInfo);
     },
@@ -84,19 +43,23 @@ const CourseForm = () => {
     register,
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: getDefaultValues(language),
     resolver: yupResolver(getSchema(language)),
   });
 
-  type IOnSubmit = Omit<ICreateCourse, 'picture'>;
-  const onSubmit = (_data: IOnSubmit) => {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const payload = { ..._data, picture: fileInput.current?.files?.[0]! };
-
-    mutate(payload);
+  const onSubmit = (_data: ICreateCourse) => {
+    mutate(_data);
   };
+  useEffect(() => {
+    if (isSuccess) {
+      reset(getDefaultValues(language));
+      burnSuccessToast('Курс добавлено!');
+    }
+  }, [isSuccess]);
+
   return (
     <Form cls={css['course-style']} onSubmit={handleSubmit(onSubmit)}>
       <Input
@@ -141,7 +104,13 @@ const CourseForm = () => {
         formProps={register(`translations.${language}.description`)}
         id={'title'}
       />
-      <input ref={fileInput} type="file" name="picture" />
+      {/* !TODO  */}
+      <ImageUploader<TDefaultValues>
+        isLoading={isLoading}
+        control={control}
+        title="Логотип Курсу"
+        name="picture"
+      />
       <input
         type="checkbox"
         checked={true}

@@ -1,21 +1,13 @@
 import React, { useEffect } from 'react';
-import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
+import * as yup from 'yup';
 
-import { getCategories } from 'hooks/useHomePageInfo';
-import { singleCourse, courseCategories } from 'queries';
+import { singleCourse } from 'queries';
 
-import { useMutation, useQueryClient, useQuery } from 'react-query';
-import { client } from 'utils/api-client';
+import { useMutation, useQueryClient } from 'react-query';
 import { useUser } from 'context/auth-provider';
-const getCourse = async (pid) => {
-  const res = await client(`course/${pid}`);
-
-  return res.data[0];
-};
 
 import Form from 'components/admin-page/common/form/form';
 import TextArea from 'components/admin-page/common/form/textarea';
@@ -24,77 +16,76 @@ import FormButton from 'components/admin-page/common/form/form-btn';
 import FormSelect from 'components/admin-page/common/form/select';
 
 import css from './style.module.css';
+import ImageUploader from '../../common/form/image-uploader';
+import { useCategoryTranslation } from 'api/course-category/data-mappers/use-category-translation';
+import { translationsType } from 'api/course/interfaces/course';
+import {
+  IUpdateCourse,
+  updateCourseInfo,
+  useSingleCourse,
+} from 'api/course/data';
 
-const getSchema = (lang) =>
+const getSchema = (lang: translationsType) =>
   yup.object().shape({
     translations: yup.object().shape({
       [lang]: yup.object().shape({
-        title: yup.string().required().min(5).max(40),
-        subtitle: yup.string().required().min(5).max(120),
-        price: yup.string().required(),
-        duration: yup.string().required(),
-        description: yup.string().required(),
+        title: yup
+          .string()
+          .required(`це поле є обов'язковим`)
+          .min(5, 'мінімум 5 символів')
+          .max(40, 'максимум 40 символів'),
+        subtitle: yup
+          .string()
+          .min(5, 'мінімум 5 символів')
+          .required("це поле є обов'язковим"),
+        price: yup
+          .string()
+          .min(3, 'мінімум 3 символи')
+          .required("це поле є обов'язковим"),
+        duration: yup
+          .string()
+          .min(5, 'мінімум 5 символів')
+          .required("це поле є обов'язковим"),
+        description: yup
+          .string()
+          .min(5, 'мінімум 5 символів')
+          .required("це поле є обов'язковим"),
       }),
     }),
-    category: yup.string().required(),
+    category: yup.string().required("це поле є обов'язковим"),
   });
+const getDefaultValues = (lang: translationsType) => {
+  return {
+    translations: {
+      [lang]: {
+        title: '',
+        subtitle: '',
+        price: '',
+        duration: '',
+        description: '',
+      },
+    },
 
-const defaultValues = {
-  title: '',
-  subtitle: '',
-  price: '',
-  duration: '',
-  description: '',
-  category: '',
+    category: '',
+    path: '',
+    isActive: true,
+    id: '',
+    token: '',
+  };
 };
+type TDefaultValues = ReturnType<typeof getDefaultValues>;
 
 const EditCourseForm = () => {
-  const router = useRouter();
-  const { pid } = router.query;
-
-  const { data: categories } = useQuery(courseCategories, getCategories);
+  const courseCategoriesOptions = useCategoryTranslation();
   const user = useUser();
   const { token } = user;
   const { i18n } = useTranslation();
-  const { language } = i18n;
 
-  const courseCategoriesOptions = categories?.map(
-    (options) => options[language]
-  );
-
-  const { data } = useQuery(singleCourse, async () => {
-    return getCourse(pid);
-  });
+  const { data } = useSingleCourse();
   const queryClient = useQueryClient();
-  const fileInput = React.useRef();
+  const language = i18n.language as translationsType;
 
-  const updateCourse = async ({
-    _id,
-    image = null,
-    category,
-    translations,
-    allData,
-  }) => {
-    const fd = new FormData();
-
-    fd.append('category', category);
-    fd.append('translations', JSON.stringify({ ...allData, ...translations }));
-
-    if (image?.current.files.length) {
-      fd.append('image', image.current.files[0], image.current.files[0].name);
-    }
-    const res = await client(`/course/${_id}`, {
-      data: fd,
-      method: 'PATCH',
-      headers: { 'Content-Type': 'multipart/form-data' },
-      isBlob: true,
-      token,
-    });
-
-    return res.data[0];
-  };
-
-  const { mutate, isLoading } = useMutation(updateCourse, {
+  const { mutate, isLoading } = useMutation(updateCourseInfo, {
     onSuccess: () => {
       queryClient.invalidateQueries(singleCourse);
     },
@@ -107,20 +98,23 @@ const EditCourseForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues,
+    defaultValues: getDefaultValues(language),
     resolver: yupResolver(getSchema(language)),
   });
 
-  const onSubmit = (params) => {
-    if (fileInput.current) {
-      params.image = fileInput;
+  const onSubmit = (params: IUpdateCourse) => {
+    if (data) {
+      mutate({
+        ...params,
+        token,
+      });
     }
-
-    mutate({ ...params, allData: data.translations });
   };
 
   useEffect(() => {
-    reset(data);
+    if (data) {
+      reset(data);
+    }
   }, [data, reset]);
 
   const path = `${process.env.NEXT_PUBLIC_API}/${data?.path}`;
@@ -171,14 +165,21 @@ const EditCourseForm = () => {
         formProps={register(`translations.${language}.description`)}
         id={'title'}
       />
-      <input ref={fileInput} type="file" name="image" />
+
+      <input {...register('id')} className={'visually-hidden'} />
       <input
-        value={true}
-        {...register('is_active')}
+        value={token}
+        {...register('token')}
         className={'visually-hidden'}
       />
-      <input value={true} {...register('_id')} className={'visually-hidden'} />
-      <img className={css['course-image']} alt="course picture" src={path} />
+
+      <ImageUploader<TDefaultValues>
+        isLoading={isLoading}
+        control={control}
+        path={path}
+        title="Логотип Курсу"
+        name="image"
+      />
       <FormButton isLoading={isLoading} />
     </Form>
   );

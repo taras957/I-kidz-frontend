@@ -10,7 +10,7 @@ const FormSelect = (props) => {
   const { title, isLoading, options, control, name } = props;
   return (
     <div className={css['form-control']}>
-      <label htmlFor={title}>
+      <label htmlFor={name}>
         {title}
         <Spinner isLoading={isLoading} />
       </label>
@@ -25,6 +25,7 @@ const FormSelect = (props) => {
         }) => (
           <>
             <Select
+              inputId={name}
               className={css['custom-select']}
               options={options}
               inputRef={ref}
@@ -32,7 +33,7 @@ const FormSelect = (props) => {
               onChange={(val) => onChange(val.value)}
               required
             />
-            <p className={'error'}>{JSON.stringify(error)}</p>
+            {error?.message ? <p className={'error'}>{error.message}</p> : null}
           </>
         )}
       />
