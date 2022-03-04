@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient, useQuery } from 'react-query';
+import { useQuery } from 'react-query';
 import { partnersInfo } from 'queries';
 import { client } from 'utils/api-client';
 import { useRouter } from 'next/router';
@@ -60,27 +60,6 @@ export const updatePartner = async (data) => {
 export const removePartner = async (id) => {
   const res = await client(`/partners/${id}`, { method: 'DELETE' });
   return res.data;
-};
-export const usePartnersInfo = () => {
-  const { data } = useQuery(partnersInfo, getPartnersInfo);
-  const queryClient = useQueryClient();
-
-  const { mutate: addPartner, isLoading } = useMutation(addPartnerInfo, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(partnersInfo);
-    },
-  });
-  const { mutate: updatePartnerInfo } = useMutation(updatePartner, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(partnersInfo);
-    },
-  });
-  const { mutate: removePartnerInfo } = useMutation(removePartner, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(partnersInfo);
-    },
-  });
-  return { data, addPartner, updatePartnerInfo, removePartnerInfo, isLoading };
 };
 
 export const useSingleItem = () => {

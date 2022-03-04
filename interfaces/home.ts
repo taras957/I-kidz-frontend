@@ -1,3 +1,5 @@
+import { IPartner } from 'api/partner/interfaces/partner';
+
 export interface IContacts {
   email: string;
   facebook: string;
@@ -70,21 +72,6 @@ export interface iTeamMember {
     ua: ITeamMemberTranslation;
     rus: ITeamMemberTranslation;
     eng: ITeamMemberTranslation;
-  };
-}
-
-export interface IPartnerTranslation {
-  title: string;
-}
-export interface IPartner {
-  img_path: string;
-  is_active: boolean;
-  link: string;
-  _id: string;
-  translations: {
-    ua: IPartnerTranslation;
-    rus: IPartnerTranslation;
-    eng: IPartnerTranslation;
   };
 }
 
