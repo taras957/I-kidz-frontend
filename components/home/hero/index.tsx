@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
 
-import FloatingClouds from 'components/home/hero/clouds';
-import Button from 'components/common/button';
-import { TelegramIcon } from 'images/custom-icons';
-import OpenModalButton from 'components/common/modal/open-modal';
-import { useHomePage } from 'hooks/useHomePage';
+import FloatingClouds from "components/home/hero/clouds";
+import Button from "components/common/button";
+import { TelegramIcon } from "images/custom-icons";
+import OpenModalButton from "components/common/modal/open-modal";
+import { useHomePage } from "hooks/useHomePage";
 
-import cx from 'classnames';
-import css from './style.module.css';
-import ErrorBanner from '@/components/common/error-banner';
+import cx from "classnames";
+import css from "./style.module.css";
+import ErrorBanner from "@/components/common/error-banner";
 
 const Hero = () => {
   const { hero, isLoading, isError } = useHomePage();
@@ -37,12 +37,12 @@ const Hero = () => {
   }, [hiddenRef]);
 
   const formatTitle = () => {
-    let titleText = hero?.title || 'n/a';
-    const firstWord = titleText.split(' ')[0];
-    titleText = titleText.replace(firstWord, ' ');
+    let titleText = hero?.title || "n/a";
+    const firstWord = titleText.split(" ")[0];
+    titleText = titleText.replace(firstWord, " ");
     return (
       <>
-        <span className={css['first-word-wrap']}>{firstWord}</span>
+        <span className={css["first-word-wrap"]}>{firstWord}</span>
         {titleText}
       </>
     );
@@ -62,18 +62,18 @@ const Hero = () => {
     <>
       <section data-testid="hero" className={css.root}>
         {!isFlying ? <FloatingClouds /> : null}
-        <div>
+        <div className={css.hero_text}>
           <h1 className={`${css.title} ${css.mt}`}>{formatTitle()}</h1>
-          <p className={css.subtitle}>{textInfo?.sub_title || 'n/a'}</p>
+          <p className={css.subtitle}>{textInfo?.sub_title || "n/a"}</p>
           {isFlying ? (
             <OpenModalButton>
               <Button
                 styles={cx(
                   css.tada,
-                  css['button-text'],
+                  css["button-text"],
                   css.animated,
                   css.infinite,
-                  css['flying-btn']
+                  css["flying-btn"]
                 )}
               >
                 {textInfo?.button}
@@ -85,14 +85,14 @@ const Hero = () => {
           ) : null}
           <OpenModalButton>
             <Button setRef={(ref) => setHiddenRef(ref)}>
-              <p className={css['button-text']}> {textInfo?.button || 'n/a'}</p>
+              <p className={css["button-text"]}> {textInfo?.button || "n/a"}</p>
               <div className={css.icon}>
                 <TelegramIcon />
               </div>
             </Button>
           </OpenModalButton>
         </div>
-        <div className={css['float-hero-boy']}>
+        <div className={css["float-hero-boy"]}>
           <Image
             src="/images/hero-boy.png"
             alt="boy with computer"
