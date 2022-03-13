@@ -6,7 +6,7 @@ import css from './style.module.css';
 
 const AboutUs = () => {
   return (
-    <section data-testid="about-us" className={css.root}>
+    <section id="about-us" data-testid="about-us" className={css.root}>
       <div className={css['side-pic']}>
         <Image
           src="/images/about-us-pic.png"

@@ -59,22 +59,6 @@ export interface ICourseCategory {
   _id: string;
 }
 
-export interface ITeamMemberTranslation {
-  title: string;
-  position: string;
-  description: string;
-}
-export interface iTeamMember {
-  img_path: number;
-  is_active: boolean;
-  _id: string;
-  translations: {
-    ua: ITeamMemberTranslation;
-    rus: ITeamMemberTranslation;
-    eng: ITeamMemberTranslation;
-  };
-}
-
 export interface ITestimonialTranslation {
   title: string;
   date: string;

@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 
 import Form from 'components/admin-page/common/form/form';
@@ -10,38 +9,28 @@ import Input from 'components/admin-page/common/form/input';
 import FormButton from 'components/admin-page/common/form/form-btn';
 
 import css from './style.module.css';
+import ImageUploader from '../../common/form/image-uploader';
+import {
+  ITeamMemberUpdate,
+  useSinglePerson,
+  useTeamMethods,
+} from 'api/team-person/data/repository';
+import { defaultValues, getSchema } from './person.config';
+import { translationsType } from 'api/course/interfaces/course';
 
-const defaultValues = (language) => ({
-  translations: {
-    [language]: {
-      title: '',
-      position: '',
-      description: '',
-    },
-  },
-  image: null,
-});
-
-const getSchema = (lang) =>
-  yup.object().shape({
-    translations: yup.object().shape({
-      [lang]: yup.object().shape({
-        title: yup.string().required().min(5).max(40),
-        position: yup.string().required(),
-        description: yup.string().required(),
-      }),
-    }),
-    image: yup.mixed().required(),
-  });
-
-const PersonForm = (props) => {
-  const { onSubmit, isLoading, values } = props;
+const EditPersonForm = () => {
+  const { update, isUpdateLoad: isLoading } = useTeamMethods();
+  const { data } = useSinglePerson();
+  console.log(data, 'data');
+  const onSubmit = (updatedPerson: ITeamMemberUpdate) => {
+    update(updatedPerson);
+  };
   const { i18n } = useTranslation();
-  const { language } = i18n;
+  const language = i18n.language as translationsType;
   const {
     register,
     reset,
-
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -50,14 +39,15 @@ const PersonForm = (props) => {
   });
 
   useEffect(() => {
-    if (values) {
-      reset(values);
+    if (data) {
+      reset(data);
     }
-  }, [values, reset]);
-  const imgPath = `${process.env.NEXT_PUBLIC_API}/${values?.img_path}`;
+  }, [data, reset]);
+
+  const imgPath = `${process.env.NEXT_PUBLIC_API}/${data?.imgPath}`;
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)} cls={css['form']}>
+    <Form onSubmit={handleSubmit(onSubmit)} cls={css['new-person-form']}>
       <fieldset>
         <Input
           errors={errors?.translations?.[language]?.title?.message}
@@ -81,12 +71,17 @@ const PersonForm = (props) => {
         <FormButton isLoading={isLoading} />
       </fieldset>
       <fieldset>
-        <img alt="person photo" src={imgPath} alt="person-photo" />
-        <input {...register('image')} type="file" />
-        <input {...register('_id')} className={'visually-hidden'} />
+        <ImageUploader
+          isLoading={isLoading}
+          control={control}
+          path={imgPath}
+          title="Фото"
+          name="image"
+        />
+        <input {...register('id')} className={'visually-hidden'} />
       </fieldset>
     </Form>
   );
 };
 
-export default PersonForm;
+export default EditPersonForm;

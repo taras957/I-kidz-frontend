@@ -1,11 +1,6 @@
 import Spinner from '@/components/common/spinner';
 import React from 'react';
-import {
-  Controller,
-  ControllerProps,
-  FieldValues,
-  useWatch,
-} from 'react-hook-form';
+import { Controller, useWatch } from 'react-hook-form';
 import FormControl from '../form-controll';
 import defaultLogo from 'images/default-images/dafault-logo.png';
 
@@ -13,14 +8,16 @@ interface IImageInputProps {
   title: string;
   isLoading: boolean;
   path?: string;
+  name: string;
 }
-export type IImageUploaderPros<T extends FieldValues> = IImageInputProps &
-  ControllerProps<T>;
+export type IImageUploaderPros = IImageInputProps & {
+  control: typeof Controller;
+};
+// ControllerProps<T>;
 
-function ImageUploader<T extends FieldValues>(props: IImageUploaderPros<T>) {
+function ImageUploader<T>(props: IImageUploaderPros) {
   const { title, isLoading, control, name, path = null } = props;
-  const watchPicture = useWatch({ control, name });
-
+  const watchPicture = useWatch<T>({ control, name });
   const imgSrc = React.useMemo(() => {
     // for displaying incoming image
     if (path && !watchPicture) {

@@ -17,7 +17,7 @@ const Courses = () => {
 
   const { courses, categories } = useHomePage();
   return (
-    <section data-testid="courses" className={css.root}>
+    <section id="courses" data-testid="courses" className={css.root}>
       <h5 className={css['section-title']}> {t('development.title')}</h5>
       <Tabs>
         <TabList>
