@@ -49,9 +49,7 @@ async function client<T>(
 
     headers: {
       'Content-Type': data ? 'application/json' : undefined,
-      'Cache-Control': 'no-cache',
-      Pragma: 'no-cache',
-      Expires: '0',
+
       ...customHeaders,
     },
     ...customConfig,
