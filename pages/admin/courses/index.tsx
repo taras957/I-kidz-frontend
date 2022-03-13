@@ -6,8 +6,8 @@ import Layout from 'components/admin-page/common/layout';
 import NewItemLink from 'components/admin-page/common/new-item-link';
 import Box from 'components/layout/box';
 import { AuthProvider } from 'context/auth-provider';
-import { useCourseTranslation } from 'api/course/data-mappers/course-with-translation-mapper';
-import { useCategoryTranslation } from 'api/course-category/data-mappers/use-category-translation';
+import { useCourseTranslation } from 'domain/course/data-mappers/course-with-translation-mapper';
+import { useCategoryTranslation } from 'domain/course-category/data-mappers/use-category-translation';
 
 const Courses = () => {
   const categories = useCategoryTranslation();

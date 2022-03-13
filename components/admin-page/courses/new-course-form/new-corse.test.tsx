@@ -1,9 +1,9 @@
 import { render, screen, waitFor } from '__tests__/utils';
 
 import NewCourseForm from '@/components/admin-page/courses/new-course-form';
-import * as categoryOptions from 'api/course-category/data-mappers/use-category-translation';
+import * as categoryOptions from 'domain/course-category/data-mappers/use-category-translation';
 import '__tests__/utils/mock-create-object-url';
-import { createCourse } from 'api/course/data';
+import { createCourse } from 'domain/course/data';
 import userEvent from '@testing-library/user-event';
 import selectEvent from 'react-select-event';
 

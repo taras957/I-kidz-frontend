@@ -3,7 +3,7 @@ import { render, screen, waitFor } from '__tests__/utils';
 import CoursesList from 'components/admin-page/courses';
 import userEvent from '@testing-library/user-event';
 
-import { deleteCourse, updateCourse } from 'api/course/data';
+import { deleteCourse, updateCourse } from 'domain/course/data';
 
 jest.mock('api/course/data');
 

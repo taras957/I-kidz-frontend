@@ -17,13 +17,13 @@ import FormSelect from 'components/admin-page/common/form/select';
 
 import css from './style.module.css';
 import ImageUploader from '../../common/form/image-uploader';
-import { useCategoryTranslation } from 'api/course-category/data-mappers/use-category-translation';
-import { translationsType } from 'api/course/interfaces/course';
+import { useCategoryTranslation } from 'domain/course-category/data-mappers/use-category-translation';
+import { translationsType } from 'domain/course/interfaces/course';
 import {
   IUpdateCourse,
   updateCourseInfo,
   useSingleCourse,
-} from 'api/course/data';
+} from 'domain/course/data';
 
 const getSchema = (lang: translationsType) =>
   yup.object().shape({

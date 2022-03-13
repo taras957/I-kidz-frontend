@@ -1,4 +1,4 @@
-import { usePartnerMethods } from 'api/partner/data';
+import { usePartnerMethods } from 'domain/partner/data';
 import React from 'react';
 import { CellProps, Column } from 'react-table';
 import Toggle from 'react-toggle';

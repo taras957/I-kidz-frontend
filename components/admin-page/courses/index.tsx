@@ -6,8 +6,8 @@ import Link from 'components/admin-page/common/link';
 import Table from 'components/admin-page/common/table';
 import Button from 'components/admin-page/common/button';
 import Toggle from 'react-toggle';
-import { ICourse, ICourseTranslation } from 'api/course/interfaces/course';
-import { deleteCourse, updateCourse } from 'api/course/data';
+import { ICourse, ICourseTranslation } from 'domain/course/interfaces/course';
+import { deleteCourse, updateCourse } from 'domain/course/data';
 import { CellProps } from 'react-table';
 
 const defaultPhrase = 'Переклад Відсутній';

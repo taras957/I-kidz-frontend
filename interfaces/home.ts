@@ -1,4 +1,4 @@
-import { IPartner } from 'api/partner/interfaces/partner';
+import { IPartner } from 'domain/partner/interfaces/partner';
 
 export interface IContacts {
   email: string;

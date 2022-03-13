@@ -7,12 +7,12 @@ import Form from 'components/admin-page/common/form/form';
 import Input from 'components/admin-page/common/form/input';
 import FormButton from 'components/admin-page/common/form/form-btn';
 import ImageUploader from '../../common/form/image-uploader';
-import { translationsType } from 'api/course/interfaces/course';
+import { translationsType } from 'domain/course/interfaces/course';
 import {
   getDefaultValues,
   getSchema,
 } from '@/components/admin-page/our-partners/new-partner/new-partner-form.config';
-import { IAddPartnerInfo, usePartnerMethods } from 'api/partner/data';
+import { IAddPartnerInfo, usePartnerMethods } from 'domain/partner/data';
 
 type TDefaultValues = ReturnType<typeof getDefaultValues>;
 

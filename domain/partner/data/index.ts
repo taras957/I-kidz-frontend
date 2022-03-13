@@ -1,4 +1,4 @@
-import { translationsType } from 'api/course/interfaces/course';
+import { translationsType } from 'domain/course/interfaces/course';
 import { useRouter } from 'next/router';
 
 import { partnersInfo } from 'queries';

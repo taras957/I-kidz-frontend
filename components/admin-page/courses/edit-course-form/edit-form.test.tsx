@@ -2,9 +2,9 @@
 //  @ts-ignore
 import { render, screen, waitFor } from '__tests__/utils';
 import EditCourseForm from '.';
-import * as apiCourseData from 'api/course/data';
+import * as apiCourseData from 'domain/course/data';
 import * as mockUser from 'context/auth-provider';
-import * as categoryOptions from 'api/course-category/data-mappers/use-category-translation';
+import * as categoryOptions from 'domain/course-category/data-mappers/use-category-translation';
 import userEvent from '@testing-library/user-event';
 import selectEvent from 'react-select-event';
 import '__tests__/utils/mock-create-object-url';

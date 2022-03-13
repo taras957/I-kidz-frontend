@@ -1,4 +1,4 @@
-import { translationsType } from 'api/course/interfaces/course';
+import { translationsType } from 'domain/course/interfaces/course';
 import { LARGE_FILE, REQUIRED } from 'enums/schema-validation-errors';
 import * as yup from 'yup';
 

@@ -9,10 +9,10 @@ import Input from 'components/admin-page/common/form/input';
 import FormButton from 'components/admin-page/common/form/form-btn';
 
 import ImageUploader from '../../common/form/image-uploader';
-import { translationsType } from 'api/course/interfaces/course';
+import { translationsType } from 'domain/course/interfaces/course';
 import { defaultValues, getSchema } from './person.config';
-import { useTeamMethods } from 'api/team-person/data/repository';
-import { ITeamMemberTranslation } from 'api/team-person/interfaces/team-member';
+import { useTeamMethods } from 'domain/team-person/data/repository';
+import { ITeamMemberTranslation } from 'domain/team-person/interfaces/team-member';
 import css from './style.module.css';
 interface INewMember {
   image: File;
