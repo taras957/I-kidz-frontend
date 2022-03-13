@@ -7,7 +7,7 @@ import { client } from 'utils/api-client';
 import { Partner } from '..';
 import { IPartnerData, IPartnerTranslation } from '../interfaces/partner';
 
-interface IAddPartnerInfo {
+export interface IAddPartnerInfo {
   image: File;
   translations: { [key in translationsType]?: IPartnerTranslation };
   is_active: boolean;
@@ -22,7 +22,7 @@ const getSingleItem = async (id: string) => {
   return new Partner(res.data[0]);
 };
 
-const addPartnerInfo = async (data: IAddPartnerInfo) => {
+export const addPartnerInfo = async (data: IAddPartnerInfo) => {
   const { image, translations, is_active, link } = data;
 
   const fd = new FormData();
@@ -43,11 +43,10 @@ const addPartnerInfo = async (data: IAddPartnerInfo) => {
   return res.data;
 };
 
-const updatePartner = async (data: IUpdatePartnerData) => {
+export const updatePartner = async (data: IUpdatePartnerData) => {
   const { image, translations, is_active, id, link } = data;
 
   const fd = new FormData();
-  console.log(translations, 'personId');
   if (link) {
     fd.append('link', link);
   }
@@ -68,7 +67,7 @@ const updatePartner = async (data: IUpdatePartnerData) => {
   return res.data;
 };
 
-const removePartner = async (id: string) => {
+export const removePartner = async (id: string) => {
   const res = await client(`/partners/${id}`, { method: 'DELETE' });
   return res.data;
 };

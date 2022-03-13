@@ -1,57 +1,46 @@
 .testimonial {
   height: 100%;
   padding: 15rem 0;
+  background-color: #f7f7f7;
+  border-radius: 15px;
+  margin: 20px 90px;
 }
+.testimonial :global(.slick-slide) > div {
+  display: flex;
+}
+
 .sd_master_wrapper {
   position: relative;
   margin: 0 auto;
-  padding: 0;
-  border-radius: 10px;
   z-index: 9999;
-}
-.sdtestBg3 {
-  height: 100%;
-  width: 80%;
-  background: #fff;
-  position: absolute;
-  bottom: -40px;
-  left: 10%;
-  border-radius: 20px;
-  box-shadow: 0px 18px 52.8537px rgb(215 228 249 / 50%);
-  z-index: 1;
-}
-.sdtestBg2 {
-  height: 100%;
-  width: 90%;
-  background: #fff;
-  position: absolute;
-  bottom: -22px;
-  left: 5%;
-  border-radius: 20px;
-  box-shadow: 0px 18px 52.8537px rgb(215 228 249 / 50%);
-  z-index: 2;
-}
+  height: max-content;
+  min-height: 280px;
+  /* From https://css.glass */
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.53);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(6.7px);
+  -webkit-backdrop-filter: blur(6.7px);
+  border: 1px solid rgba(255, 255, 255, 0.93);
+  max-width: 630px;
 
+  color: rgb(0, 0, 0);
+
+  display: flex !important;
+  align-items: center;
+}
+.icon {
+  position: relative;
+}
 .sd_scroll {
   height: auto;
-  max-height: 180px;
+  max-height: 210px;
   overflow: auto;
 }
 
 .slideshow {
-  outline: none;
-  position: relative;
-  min-height: 300px;
   height: 100%;
-  background: #fff;
-  box-shadow: 0px 18px 52.8537px rgba(215, 228, 249, 0.5);
-  border-radius: 20px;
-  background-image: url(https://farsighttechnologies.com/wp-content/uploads/2021/03/quote1.png),
-    url(https://farsighttechnologies.com/wp-content/uploads/2021/03/quote.png);
-  background-position: top 15px left 15px, bottom 40% right 15px;
-  background-repeat: no-repeat;
-  background-size: 180px, 180px;
-  z-index: 3;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -93,8 +82,8 @@ button.slick-next.slick-arrow {
   z-index: 999;
 }
 .sdCustomSliderHeadig {
-  color: #1b3032;
-  font-family: "Nunito", Sans-serif;
+  color: #000000;
+  font-family: 'Nunito', Sans-serif;
   font-size: 15px;
   font-weight: 400;
   line-height: 1.6em;
@@ -103,7 +92,7 @@ button.slick-next.slick-arrow {
 .sdCustomSliderBtn {
   display: inline-block;
   text-decoration: none;
-  font-family: "Nunito";
+  font-family: 'Nunito';
   background: #e31c3a;
   color: #fff;
   padding: 12px 25px;
@@ -111,10 +100,9 @@ button.slick-next.slick-arrow {
   border-radius: 4px;
   outline: none;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 630;
 }
 .sdAllContent {
-  width: 75%;
   margin: auto;
 }
 .thumbnail img {
@@ -130,17 +118,18 @@ button.slick-next.slick-arrow {
 }
 .SdClientName {
   text-align: center;
-  color: #272d4e;
-  font-family: "Nunito", Sans-serif;
+  color: #111111;
+  font-family: 'Nunito', Sans-serif;
   font-size: 16px;
   font-weight: 500;
   line-height: 1.4em;
   margin-top: 15px;
+  margin-top: 0;
 }
 .SdClientDesc {
   text-align: center;
   color: #7854f7;
-  font-family: "Nunito", Sans-serif;
+  font-family: 'Nunito', Sans-serif;
   font-size: 14px;
   line-height: 1.4em;
   margin-bottom: 10px;

@@ -6,6 +6,7 @@ import { projectBootstrapQuery } from 'queries/index';
 import { useQueryClient } from 'react-query';
 
 import css from './style.module.css';
+import QuoteIcon from 'images/custom-icons/quote';
 
 const defaultValue = {
   description: 'Переклад Відсутній',
@@ -39,21 +40,12 @@ const Testimonials = () => {
             node.translations[language] || defaultValue;
           return (
             <div key={node._id} className={css['sd_master_wrapper']}>
-              <div className={css['sdtestBg2']}></div>
-              <div className={css['sdtestBg3']}></div>
-              <div className={css['slideshow']}>
-                <div className={css['content']}>
-                  <div className={css['btnNtxt']}>
-                    <div className={css['sdAllContent']}>
-                      <div className={css['sd_scroll']}>
-                        <h1 className={css['sdCustomSliderHeadig']}>
-                          {description}
-                        </h1>
-                      </div>
-                      <p className={css['SdClientName']}>{title}</p>
-                    </div>
-                  </div>
+              <div className={css['sdAllContent']}>
+                <div className={css['sd_scroll']}>
+                  <QuoteIcon cls={css['icon']} />
+                  <h3 className={css['sdCustomSliderHeadig']}>{description}</h3>
                 </div>
+                <p className={css['SdClientName']}>{title}</p>
               </div>
             </div>
           );
