@@ -14,9 +14,9 @@ import {
   ITeamMemberUpdate,
   useSinglePerson,
   useTeamMethods,
-} from 'api/team-person/data/repository';
+} from 'domain/team-person/data/repository';
 import { defaultValues, getSchema } from './person.config';
-import { translationsType } from 'api/course/interfaces/course';
+import { translationsType } from 'domain/course/interfaces/course';
 
 const EditPersonForm = () => {
   const { update, isUpdateLoad: isLoading } = useTeamMethods();

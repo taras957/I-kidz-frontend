@@ -7,7 +7,7 @@ import {
   ITeamMemberTranslation,
 } from '../interfaces/team-member';
 import { TeamMember } from '..';
-import { translationsType } from 'api/course/interfaces/course';
+import { translationsType } from 'domain/course/interfaces/course';
 
 export const getTeamPersons = async () => {
   const res = await client<iTeamMemberData[]>('/team-persons');

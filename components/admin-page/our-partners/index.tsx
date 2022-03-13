@@ -1,6 +1,9 @@
 import React from 'react';
 import Table from 'components/admin-page/common/table';
-import { IPartner, IPartnerTranslation } from 'api/partner/interfaces/partner';
+import {
+  IPartner,
+  IPartnerTranslation,
+} from 'domain/partner/interfaces/partner';
 import { usePartnerColumns } from './partners.config';
 
 export type PartnerItem = Omit<IPartner, 'translations'> & IPartnerTranslation;

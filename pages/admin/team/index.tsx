@@ -3,7 +3,7 @@ import NewItemLink from 'components/admin-page/common/new-item-link';
 import Layout from 'components/admin-page/common/layout';
 import TeamList from 'components/admin-page/our-team';
 import { AuthProvider } from 'context/auth-provider';
-import { useTeamMemberWithTranslation } from 'api/team-person/data-mappers/team-members-translation';
+import { useTeamMemberWithTranslation } from 'domain/team-person/data-mappers/team-members-translation';
 
 const Team = () => {
   const data = useTeamMemberWithTranslation();

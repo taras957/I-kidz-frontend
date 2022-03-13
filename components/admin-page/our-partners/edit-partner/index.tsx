@@ -2,7 +2,7 @@ import {
   IUpdatePartnerData,
   usePartnerMethods,
   useSingleItem,
-} from 'api/partner/data';
+} from 'domain/partner/data';
 import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -11,9 +11,9 @@ import { useTranslation } from 'react-i18next';
 import Form from 'components/admin-page/common/form/form';
 import Input from 'components/admin-page/common/form/input';
 import FormButton from 'components/admin-page/common/form/form-btn';
-import { IPartner } from 'api/partner/interfaces/partner';
+import { IPartner } from 'domain/partner/interfaces/partner';
 import ImageUploader from '../../common/form/image-uploader';
-import { translationsType } from 'api/course/interfaces/course';
+import { translationsType } from 'domain/course/interfaces/course';
 import { ObjectKeysTransformation } from 'utils/object-keys-formatter';
 import {
   getDefaultValues,

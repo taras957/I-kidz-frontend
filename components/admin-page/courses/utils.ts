@@ -1,4 +1,4 @@
-import { translationsType } from 'api/course/interfaces/course';
+import { translationsType } from 'domain/course/interfaces/course';
 import * as yup from 'yup';
 
 export const getSchema = (lang: translationsType) =>

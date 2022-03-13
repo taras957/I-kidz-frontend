@@ -16,9 +16,9 @@ import FormSelect from 'components/admin-page/common/form/select';
 import { siteInfo } from 'queries';
 
 import css from './style.module.css';
-import { createCourse, ICreateCourse } from 'api/course/data';
-import { useCategoryTranslation } from 'api/course-category/data-mappers/use-category-translation';
-import { translationsType } from 'api/course/interfaces/course';
+import { createCourse, ICreateCourse } from 'domain/course/data';
+import { useCategoryTranslation } from 'domain/course-category/data-mappers/use-category-translation';
+import { translationsType } from 'domain/course/interfaces/course';
 import ImageUploader from '@/components/admin-page/common/form/image-uploader';
 import { useToaster } from '@/components/common/toaster';
 

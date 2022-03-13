@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { render, screen, waitFor } from '__tests__/utils';
 import userEvent from '@testing-library/user-event';
-import * as partners from 'api/partner/data';
+import * as partners from 'domain/partner/data';
 import PartnersList from '.';
 const mockUpdate = jest.fn();
 const mockDelete = jest.fn();
