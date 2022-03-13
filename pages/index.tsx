@@ -24,7 +24,9 @@ const apiURL = process.env.NEXT_PUBLIC_API;
 const apiPrefix = process.env.NEXT_PUBLIC_API_PREFIX;
 
 export async function bootstrapApp(): Promise<IProjectBootstrap> {
-  const bootstrap = await axios.get(`${apiURL}/${apiPrefix}/bootstrap`);
+  const bootstrap = await axios.get(
+    `${apiURL}/${apiPrefix}/bootstrap?_vercel_no_cache=1`
+  );
   return bootstrap.data;
 }
 
