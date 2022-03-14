@@ -22,11 +22,9 @@ import css from './style.module.css';
 
 const apiURL = process.env.NEXT_PUBLIC_API;
 const apiPrefix = process.env.NEXT_PUBLIC_API_PREFIX;
-const revalidateToken = process.env.MY_REVALIDATE_TOKEN;
+
 export async function bootstrapApp(): Promise<IProjectBootstrap> {
-  const bootstrap = await axios.get(
-    `${apiURL}/${apiPrefix}/bootstrap?${revalidateToken}`
-  );
+  const bootstrap = await axios.get(`${apiURL}/${apiPrefix}/bootstrap`);
   return bootstrap.data;
 }
 

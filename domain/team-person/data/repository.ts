@@ -8,6 +8,7 @@ import {
 } from '../interfaces/team-member';
 import { TeamMember } from '..';
 import { translationsType } from 'domain/course/interfaces/course';
+import { revalidate } from 'utils/page-revalidate';
 
 export const getTeamPersons = async () => {
   const res = await client<iTeamMemberData[]>('/team-persons');
@@ -20,6 +21,7 @@ export const getSingleTeamPerson = async (id: string) => {
 };
 export const removeTeamPerson = async (id: string) => {
   const res = await client(`/team-person/${id}`, { method: 'DELETE' });
+  await revalidate();
   return res.data;
 };
 
@@ -44,6 +46,8 @@ export const createTeamPerson = async (data: ITeamMemberAdd) => {
     headers: { 'Content-Type': 'multipart/form-data' },
     isBlob: true,
   });
+  await revalidate();
+
   return res.data;
 };
 
@@ -68,6 +72,8 @@ export const updateTeamPerson = async (data: ITeamMemberUpdate) => {
     headers: { 'Content-Type': 'multipart/form-data' },
     isBlob: true,
   });
+  await revalidate();
+
   return res.data;
 };
 
