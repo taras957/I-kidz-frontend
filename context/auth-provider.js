@@ -10,7 +10,7 @@ import { globalToastSettings } from '@/components/common/toaster';
 const localStorageKey = 'token';
 const tenMinutes = 10 * 60 * 1000;
 console.log(tenMinutes, 'tenMinutes');
-async function getToken() {
+export async function getToken() {
   return window.localStorage.getItem(localStorageKey);
 }
 async function setToken(token) {

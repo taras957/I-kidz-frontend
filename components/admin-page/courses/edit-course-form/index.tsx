@@ -7,7 +7,6 @@ import * as yup from 'yup';
 import { singleCourse } from 'queries';
 
 import { useMutation, useQueryClient } from 'react-query';
-import { useUser } from 'context/auth-provider';
 
 import Form from 'components/admin-page/common/form/form';
 import TextArea from 'components/admin-page/common/form/textarea';
@@ -77,8 +76,6 @@ type TDefaultValues = ReturnType<typeof getDefaultValues>;
 
 const EditCourseForm = () => {
   const courseCategoriesOptions = useCategoryTranslation();
-  const user = useUser();
-  const { token } = user;
   const { i18n } = useTranslation();
 
   const { data } = useSingleCourse();
@@ -106,16 +103,14 @@ const EditCourseForm = () => {
     if (data) {
       mutate({
         ...params,
-        token,
       });
     }
   };
-
   useEffect(() => {
     if (data) {
       reset(data);
     }
-  }, [data, reset]);
+  }, [JSON.stringify(data), reset]);
 
   const path = `${process.env.NEXT_PUBLIC_API}/${data?.path}`;
   return (
@@ -167,11 +162,6 @@ const EditCourseForm = () => {
       />
 
       <input {...register('id')} className={'visually-hidden'} />
-      <input
-        value={token}
-        {...register('token')}
-        className={'visually-hidden'}
-      />
 
       <ImageUploader<TDefaultValues>
         isLoading={isLoading}
