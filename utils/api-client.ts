@@ -1,4 +1,25 @@
 import axios, { Method } from 'axios';
+import { getToken } from 'context/auth-provider';
+const axiosInstance = axios.create();
+
+// Interceptors
+// You can intercept requests or responses before they are handled by then or catch.
+
+// Add a request interceptor
+axiosInstance.interceptors.request.use(
+  async function (config) {
+    const token = await getToken();
+    if (token) {
+      Object.assign(config.headers, { Authorization: `Bearer ${token}` });
+    }
+    // Do something before request is sent
+    return config;
+  },
+  function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+  }
+);
 
 const apiURL = process.env.NEXT_PUBLIC_API;
 const apiPrefix = process.env.NEXT_PUBLIC_API_PREFIX;
@@ -58,7 +79,7 @@ async function client<T>(
   if (token) {
     Object.assign(config.headers, { Authorization: `Bearer ${token}` });
   }
-  return axios.request<T>(config);
+  return axiosInstance.request<T>(config);
   // .catch((e: unknown) => {
   // return handleErrorResponse(e);
   // console.log(e.toJSON(), 'error api');
