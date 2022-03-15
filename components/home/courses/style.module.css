@@ -28,14 +28,14 @@
   font-size: 16px;
 }
 .root :global(.react-tabs__tab--selected) {
-  background: #86aeff;
   border-color: #86aeff;
-  color: white;
+
   border-radius: 5px 5px 0 0;
-  font-size: 14px;
+  font-family: var(--text-ff);
+  font-size: 1.6rem;
 }
 .root :global(.react-tabs__tab) {
-  font-size: 14px;
+  font-size: 1.6rem;
 }
 .root :global(.react-tabs__tab-list) {
   border-bottom: 1px solid #00d6df;

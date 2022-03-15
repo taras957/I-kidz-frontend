@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { singleCourse, siteInfo } from 'queries';
 import { useQuery } from 'react-query';
 import { client } from 'utils/api-client';
+import { revalidate } from 'utils/page-revalidate';
 import { Course } from '..';
 import {
   ICourseData,
@@ -62,6 +63,7 @@ export const createCourse = async (data: ICreateCourse) => {
     headers: { 'Content-Type': 'multipart/form-data' },
     isBlob: true,
   });
+  await revalidate();
 };
 // UPDATE
 interface IUpdateParams {
@@ -71,6 +73,7 @@ interface IUpdateParams {
 
 export const updateCourse = async ({ id, ...data }: IUpdateParams) => {
   await client(`/course/${id}`, { data, method: 'PATCH' });
+  await revalidate();
 };
 
 //  UPDATE FULL COURSE INFO
@@ -103,9 +106,11 @@ export const updateCourseInfo = async ({
     isBlob: true,
     token,
   });
+  await revalidate();
 };
 
 // DELETE
 export const deleteCourse = async (id: string | number) => {
   await client(`/course/${id}`, { method: 'DELETE' });
+  await revalidate();
 };

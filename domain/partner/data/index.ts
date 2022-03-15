@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { partnersInfo } from 'queries';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { client } from 'utils/api-client';
+import { revalidate } from 'utils/page-revalidate';
 import { Partner } from '..';
 import { IPartnerData, IPartnerTranslation } from '../interfaces/partner';
 
@@ -40,6 +41,8 @@ export const addPartnerInfo = async (data: IAddPartnerInfo) => {
     headers: { 'Content-Type': 'multipart/form-data' },
     isBlob: true,
   });
+  await revalidate();
+
   return res.data;
 };
 
@@ -64,11 +67,15 @@ export const updatePartner = async (data: IUpdatePartnerData) => {
     headers: { 'Content-Type': 'multipart/form-data' },
     isBlob: true,
   });
+  await revalidate();
+
   return res.data;
 };
 
 export const removePartner = async (id: string) => {
   const res = await client(`/partners/${id}`, { method: 'DELETE' });
+  await revalidate();
+
   return res.data;
 };
 
